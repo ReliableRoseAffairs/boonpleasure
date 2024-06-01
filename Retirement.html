@@ -1,0 +1,663 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>BoonGrowth</title>
+
+  <!-- 
+    - favicon
+  -->
+  <link rel="shortcut icon" href="./favicon.svg" type="image/svg+xml">
+
+  <!-- 
+    - custom css link
+  -->
+  <link rel="stylesheet" href="./assets/css/style.css">
+
+  <!-- 
+    - google font link
+  -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&family=Source+Sans+Pro:wght@600;700&display=swap"
+    rel="stylesheet">
+    <style>
+              .blog-post {
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            margin: 20px auto;
+            padding: 20px;
+            max-width: 600px;
+        }
+
+        #postTitle {
+            font-size: 24px;
+            color: #333;
+            margin-bottom: 10px;
+        }
+
+        #postImage {
+            width: 100%;
+            border-radius: 10px;
+            margin-bottom: 10px;
+        }
+
+        #postContent {
+            color: #666;
+            line-height: 1.6;
+        }
+        h2 {
+          color: #1666c4;
+          text-align: center;
+          font-weight: 600;
+          font-size: 24px;
+        }
+        p {
+          text-align: center;
+        }
+      
+    </style>
+</head>
+
+<body id="top">
+
+  <!-- 
+    - #HEADER
+  -->
+
+  <header class="header" data-header>
+    <div class="container">
+
+      <div class="overlay" data-overlay></div>
+
+      <a href="#">
+        <h1 class="logo">Boon</h1>
+      </a>
+
+      <nav class="navbar" data-navbar>
+
+        <div class="navbar-top">
+          <a href="#" class="logo">Boon</a>
+
+          <button class="nav-close-btn" aria-label="Close Menu" data-nav-close-btn>
+            <ion-icon name="close-outline"></ion-icon>
+          </button>
+        </div>
+
+        <ul class="navbar-list">
+
+          <li class="navbar-item">
+            <a href="index.html" class="navbar-link" data-navbar-link>Home</a>
+          </li>
+
+          <li class="navbar-item">
+            <a href="#about" class="navbar-link" data-navbar-link>About</a>
+          </li>
+
+          <li class="navbar-item">
+            <a href="#services" class="navbar-link" data-navbar-link>Services</a>
+          </li>
+
+          <li class="navbar-item">
+            <a href="#features" class="navbar-link" data-navbar-link>Features</a>
+          </li>
+
+          <li class="navbar-item">
+            <a href="#blog" class="navbar-link" data-navbar-link>Login</a>
+          </li>
+
+          <li class="navbar-item">
+            <a href="#" class="navbar-link" data-navbar-link>Open Account</a>
+          </li>
+
+        </ul>
+
+      </nav>
+
+      <a href="#" class="btn">
+        <ion-icon name="chevron-forward-outline" aria-hidden="true"></ion-icon>
+
+        <span>Get A Quote</span>
+      </a>
+
+      <button class="nav-open-btn" aria-label="Open Menu" data-nav-open-btn>
+        <ion-icon name="menu-outline"></ion-icon>
+      </button>
+
+    </div>
+  </header>
+
+
+
+
+
+  <main>
+    <article>
+
+      <!-- 
+        - #HERO
+      -->
+
+      <section class="hero" id="home">
+        <div class="container">
+
+          <div class="hero-content">
+
+            <p class="hero-subtitle"> </p>
+
+            <h2 class="h2 hero-title">Retirement Plan </h2>
+
+            <p class="hero-text">
+            lnvesting in your retirement is not just about securing your future; it's about investing in the life you've always dreamed of living</p>
+
+            <button class="btn">Open an account</button>
+
+          </div>
+
+          
+        </div>
+      </section>
+      
+
+  <!-- Container for Displaying Blog Posts -->
+
+
+  <!-- Firebase JavaScript SDK -->
+  <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-firestore.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-storage.js"></script>
+  <script>
+    // Initialize Firebase
+    var firebaseConfig = {
+  apiKey: "AIzaSyAtVvPjdsj84mWqaG4-7SyjbljCnslZ1SM",
+  authDomain: "hendaa-1.firebaseapp.com",
+  databaseURL: "https://hendaa-1-default-rtdb.firebaseio.com",
+  projectId: "hendaa-1",
+  storageBucket: "hendaa-1.appspot.com",
+  messagingSenderId: "831134776479",
+  appId: "1:831134776479:web:56cd7098fc69cd70a376aa"
+};
+    firebase.initializeApp(firebaseConfig);
+
+    // Firestore database
+    var db = firebase.firestore();
+
+    // Function to fetch and display blog posts
+    function fetchBlogPosts() {
+      db.collection("blogPosts").orderBy("timestamp", "desc").onSnapshot(function(querySnapshot) {
+        document.getElementById("blogList").innerHTML = "";
+        querySnapshot.forEach(function(doc) {
+          var post = doc.data();
+          var div = document.createElement("div");
+          div.classList.add("blog-post");
+          div.innerHTML = `
+            
+            <img id="postImage" src="${post.imageUrl}" alt="Post Image">
+            <h3 id="postTitle">${post.title}</h3>
+            <p id="postContent">${post.content}</p>
+          `;
+          document.getElementById("blogList").appendChild(div);
+        });
+      });
+    }
+
+    // Fetch and display blog posts when the page loads
+    window.onload = function() {
+      fetchBlogPosts();
+    };
+  </script>
+ <section class="section features" id="features">
+        <div class="container">
+<p>Welcome to our comprehensive guide to planning your retirement. Whether you're just starting your career or nearing retirement age, it's never too early or too late to start investing in your future financial security</p>
+
+<br>
+<p class="text">
+  Discover a range of investment options within retirement accounts, from stocks and bonds to mutual funds and exchange-traded funds (ETFs), tailored to your risk tolerance and financial goals
+</p><br>
+ <figure class="about-banner">
+            <img src="./assets/images/image5.jpg" width="700" height="532" loading="lazy" alt="about banner"
+              class="w-100 banner-animation">
+          </figure>
+  <h2 class="h2 section-title text-center">What makes investing with us worthwhile?</h2>
+
+          <p class="section-text text-center">
+          
+          </p>
+
+          <ul class="grid-list">
+
+            <li>
+              <div class="promo-card bg-gray">
+
+                
+                <h3 class="h3 card-title">Expertise</h3>
+                <p class="card-text">
+                  Benefit from our team's expertise and experience in financial markets, ensuring your investments are managed with care and precision
+                </p>
+                       <h3 class="h3 card-title">Diverse Portfolio</h3>
+                            <p class="card-text">Gain access to a diverse range of investment opportunities, carefully curated to align with your financial goals and risk tolerance</p>
+                            
+                       <h3 class="h3 card-title">Risk Management</h3>
+                            <p class="card-text">Our risk management strategies help protect your investments from market volatility, preserving capital and minimizing downside risk</p>
+                       <h3 class="h3 card-title">Innovative Technology</h3>
+                            <p class="card-text">Leverage cutting-edge technology and data analytics to optimize investment decisions and adapt to changing market conditions in real-time</p>
+                            
+                        <h3 class="h3 card-title">Client Support</h3>
+                             <p class="card-text">Access dedicated client support from our team of professionals, providing guidance and assistance every step of the way to help you achieve your financial objectives</p>
+                        <h3 class="h3 card-title">Transparency</h3>
+                             <p class="card-text">Enjoy transparency in our investment process, with clear communication about our strategies, performance, and fees, empowering you to make informed decisions</p>
+                        <h3 class="h3 card-title">Long-Term Focus</h3>
+                             <p class="card-text"> We prioritize long-term wealth accumulation and financial security, helping you build a solid foundation for your future and navigate economic cycles with confidence</p>
+                    
+                    
+                    
+
+                <p class="card-text">
+                </p>
+              </div>
+            </li>
+             <figure class="about-banner">
+            <img src="./assets/images/image5.jpg" width="700" height="532" loading="lazy" alt="about banner"
+              class="w-100 banner-animation">
+          </figure>
+          <h2 class="h2 section-title underline">Tips for creating a retirement portfolio that's more likely to go the distance.</h2>
+          <p>As exciting as the prospect of retirement is, it can also feel daunting. Not only do you have to start living off your savings, but you also need to make sure you don't run out of money. So, how do you build a retirement portfolio that serves both purposes?</p>
+
+          <ul class="features-list">
+
+            <li>
+              <div class="features-card">
+
+                <div class="icon">
+                  <ion-icon name="bulb-outline"></ion-icon>
+                </div>
+
+                <div class="content">
+                  <h3 class="h3 title">Protect your downside</h3>
+
+                  <p class="text">
+                    Making a big withdrawal from your retirement savings in the midst of a downturn can have a negative impact on your portfolio over the long-term. To help protect against that possibility, it's a good idea to add two safety nets to your retirement portfolio
+                  </p>
+                </div>
+
+              </div>
+            </li>
+
+            <li>
+              <div class="features-card">
+
+                <div class="icon">
+                  <ion-icon name="color-palette-outline"></ion-icon>
+                </div>
+
+                <div class="content">
+                  <h3 class="h3 title">Balance income and growth</h3>
+
+                  <p class="text">
+                    Once you have your short-term reserves in place, it's time to allocate the remainder of your portfolio to investments that align with your goals, time horizon, and risk tolerance. Ideally, you'll choose a mix of stocks, bonds, and cash investments that will work together to generate a steady stream of retirement income and future growth—all while helping to preserve your money. For example, you could:
+                    <br>
+                    <br>
+                    <strong>Build a bond ladder:</strong> Purchasing bonds with staggered coupon and maturity dates can help even out your portfolio's yields over time and provide a steady flow of income.
+                    <br>
+                    <br>
+                    <strong>Opt for dividend-payers:</strong> Consider adding some dividend-paying stocks to your portfolio. Not only do they offer a regular stream of income, but they also allow your principal to remain invested for potential growth.
+                    <br>
+                    <br>
+                    <strong>Stick with stocks:</strong> Make sure you don't dial back your exposure to stocks too soon. Having a larger allocation of stocks in the early years of retirement will help guard against the risk of outliving your retirement savings. Later on, you can adjust your allocation to focus more on generating income and preserving your money
+                    <br>
+                    <br>
+                    <strong>Shifting your energy:</strong>
+                    Investors in the early years of retirement may want a greater allocation to stocks to guard against longevity risk, while those in their later years will want to prioritize income generation and capital preservation.
+                    <br>
+                    <br>
+                    At age 60–69, consider a moderate portfolio (60% stock, 35% bonds, 5% cash/cash investments); 70–79, moderately conservative (40% stock, 50% bonds, 10% cash/cash investments); 80 and above, conservative (20% stock, 50% bonds, 30% cash/cash investments).
+ 
+
+                  </p>
+                </div>
+
+              </div>
+            </li>
+
+          </ul>
+
+          
+            
+          <ul class="features-list">
+
+            <li>
+              <div class="features-card">
+
+                <div class="icon">
+                  <ion-icon name="code-slash-outline"></ion-icon>
+                </div>
+
+                <div class="content">
+                  <h3 class="h3 title">Consider all your income sources
+
+ </h3>
+
+                  <p class="text">
+                    As you put together your retirement portfolio, you also need to think about the role your savings will play in your overall income plan. For example, how much income do you expect from guaranteed sources like annuities, pensions, and Social Security? <br>
+                  <br>
+                  If these guaranteed income streams will generate enough income to cover the majority of your expenses, you might be able to maintain a more aggressive stance with your portfolio well into retirement
+                  </p>
+                </div>
+        </li>
+             <figure class="about-banner">
+            <img src="./assets/images/image5.jpg" width="700" height="532" loading="lazy" alt="about banner"
+              class="w-100 banner-animation">
+          </figure>
+            </div>
+          
+<h2>Crafting Your Retirement Withdrawal Plan</h2>
+
+ 
+
+<p class="text">After years of diligent saving for retirement, transitioning to withdrawing and relying on those funds can evoke some uncertainty. How can you ensure longevity for your savings? Understanding the optimal order for tapping into your assets can significantly impact this endeavor.</p>
+
+ 
+
+<h2>Tap interest and dividends</h2>
+
+ 
+
+<p>Following that, withdraw any interest and dividends earned from investments within your taxable accounts. Interest is typically taxed as ordinary income, except when derived from a tax-exempt municipal bond or municipal bond fund. Conversely, dividends often face taxation at lower long-term capital gains rates ranging from 0% to 20%, contingent upon factors such as your income level, holding period of the asset, and additional criteria.
+
+Opting to withdraw solely the interest and dividends allows you to preserve your initial investment, potentially fostering growth that could generate further dividends and interest in subsequent years</p>
+
+ 
+
+<h2>
+Cash out maturing bonds and certificates of deposit (CDs)
+</h2>
+ 
+
+<p>If additional funds are necessary, consider accessing the principal from a matured bond or CD. Typically, you won't incur taxes on the principal, provided you retain the bond or CD until maturity.
+<br><br>
+
+Should the funds not be immediately required upon the maturity of your bond or CD, contemplate reinvesting the principal in another bond or CD. This approach forms part of a laddering strategy aimed at facilitating consistent income generation.</p>
+
+ 
+
+<h2> Sell additional assets as needed</h2>
+
+
+ 
+
+<p>If your current resources still fall short of covering your expenses, selling additional assets becomes necessary, but the selection may hinge on your tax circumstances.<br><br>
+
+For individuals with modest tax-deferred savings and RMDs unlikely to elevate them into a higher tax bracket in retirement, focusing on taxable brokerage accounts is advisable. Exploring the sale of investments with depreciated value enables capital losses utilization for a tax deduction on capital gains. Furthermore, excess losses can offset ordinary income, with a maximum of $3,000 allowable for this purpose. Prioritize assets held for over a year to leverage long-term capital gains tax rates, which are lower compared to short-term capital gains taxed at income tax rates.
+<br>
+<br>
+
+Conversely, individuals possessing substantial tax-deferred savings and anticipating RMDs potentially elevating them into a higher tax bracket later in retirement may contemplate withdrawals from tax-deferred accounts once they attain the age of 59½.</p>
+
+
+
+
+ <h2>Save your Roth IRAs for last </h2>
+ <p class="text">
+   It's generally advisable to defer accessing Roth IRA assets for as long as feasible, given their exemption from RMDs and the tax-free nature of withdrawals commencing at age 59½, provided the account has been held for at least five years. Additionally, leaving a Roth IRA to an heir ensures their withdrawals remain tax-free.
+
+In contrast to Roth IRAs, Roth 401(k)s are subject to RMDs as of 2023. Consequently, if you possess a Roth 401(k), transferring it to a Roth IRA could be advantageous. However, note that this action might reset the five-year holding requirement unless the Roth 401(k) funds are merged into an existing Roth IRA. It's worth mentioning that the RMD requirement for Roth 401(k)s will be eliminated starting in 2024, following the amendments introduced by the SECURE 2.0 Act. Nevertheless, seeking advice from a financial advisor before proceeding with a rollover is always prudent.
+ </p>
+          </ul>
+
+        </div>
+      </section>
+        <div id="blogList"></div>
+      <br><br>
+      
+      <section class="contact" id="contact">
+        <div class="container">
+
+          <h2 class="h2 section-title">Contact Us</h2>
+
+          <p class="card-text">
+            Contact us for more information
+          </p>
+
+          <div class="contact-wrapper">
+
+            <form action="" class="contact-form">
+
+              <div class="wrapper-flex">
+
+                <div class="input-wrapper">
+                  <label for="name">Name*</label>
+
+                  <input type="text" name="name" id="name" required placeholder="Enter Your Name" class="input-field">
+                </div>
+
+                <div class="input-wrapper">
+                  <label for="emai">Email*</label>
+
+                  <input type="text" name="email" id="email" required placeholder="Enter Your Email"
+                    class="input-field">
+                </div>
+
+              </div>
+              <textarea name="message" id="message" required placeholder="Type Your Message"
+                class="input-field"></textarea>
+
+              <button class="cta-form-btn btn"     onclick="send()">Submit</button>
+            </form>
+            </ul>
+          </div>
+        </div>
+      </section>
+       
+  <footer class="footer">
+
+    <div class="footer-top section">
+      <div class="container">
+
+        <div class="footer-brand">
+
+          <a href="#" class="logo">Boon</a>
+
+          <p class="text">
+            All users of our online services are subject to our Privacy Statement and agree to be bound by the Terms of Service. Please review.
+          </p>
+
+          <ul class="social-list">
+
+            <li>
+              <a href="#" class="social-link">
+                <ion-icon name="logo-facebook"></ion-icon>
+              </a>
+            </li>
+
+            <li>
+              <a href="#" class="social-link">
+                <ion-icon name="logo-instagram"></ion-icon>
+              </a>
+            </li>
+
+            <li>
+              <a href="#" class="social-link">
+                <ion-icon name="logo-twitter"></ion-icon>
+              </a>
+            </li>
+
+          </ul>
+
+        </div>
+
+        <ul class="footer-list">
+
+          <li>
+            <p class="footer-list-title">Our links</p>
+          </li>
+
+          <li>
+            <a href="#" class="footer-link">Home</a>
+          </li>
+
+          <li>
+            <a href="#" class="footer-link">About Us</a>
+          </li>
+
+          <li>
+            <a href="#" class="footer-link">Services</a>
+          </li>
+
+          <li>
+            <a href="#" class="footer-link">Team</a>
+          </li>
+
+          <li>
+            <a href="#" class="footer-link">Blog</a>
+          </li>
+
+        </ul>
+
+        <ul class="footer-list">
+
+          <li>
+            <p class="footer-list-title">Our Services</p>
+          </li>
+
+          <li>
+            <a href="#" class="footer-link">Strategy & Research</a>
+          </li>
+
+          <li>
+            <a href="#" class="footer-link">Web Development</a>
+          </li>
+
+          <li>
+            <a href="#" class="footer-link">Web Solution</a>
+          </li>
+
+          <li>
+            <a href="#" class="footer-link">Digital Marketing</a>
+          </li>
+
+          <li>
+            <a href="#" class="footer-link">App Design</a>
+          </li>
+
+        </ul>
+
+        <ul class="footer-list">
+
+          <li>
+            <p class="footer-list-title">Other links</p>
+          </li>
+
+          <li>
+            <a href="#" class="footer-link">FAQ</a>
+          </li>
+
+          <li>
+            <a href="#" class="footer-link">Portfolio</a>
+          </li>
+
+          <li>
+            <a href="#" class="footer-link">Privacy Policy</a>
+          </li>
+
+          <li>
+            <a href="#" class="footer-link">Terms & Conditions</a>
+          </li>
+
+          <li>
+            <a href="#" class="footer-link">Support</a>
+          </li>
+
+        </ul>
+
+        <ul class="footer-list">
+
+          <li>
+            <p class="footer-list-title">Contact Us</p>
+          </li>
+
+          <li class="footer-item">
+
+            <div class="footer-item-icon">
+              <ion-icon name="call"></ion-icon>
+            </div>
+
+            <div>
+              <a href="tel:+2484214313" class="footer-item-link">+248-421-4313</a>
+              <a href="tel:+2486871365" class="footer-item-link">+248-687-1365</a>
+            </div>
+
+          </li>
+
+          <li class="footer-item">
+
+            <div class="footer-item-icon">
+              <ion-icon name="mail"></ion-icon>
+            </div>
+
+            <div>
+              <a href="mailto:info@desinic.com" class="footer-item-link">info@desinic.com</a>
+              <a href="mailto:help@desinic.com" class="footer-item-link">help@desinic.com</a>
+            </div>
+
+          </li>
+
+          <li class="footer-item">
+
+            <div class="footer-item-icon">
+              <ion-icon name="location"></ion-icon>
+            </div>
+
+            <address class="footer-item-link">
+              Pontiac, Michigan, United States of America
+            </address>
+
+          </li>
+
+        </ul>
+
+      </div>
+    </div>
+
+    <div class="footer-bottom">
+      <p class="copyright">
+        &copy; 2022 <a href="#" class="copyright-link">codewithsadee</a>. All Right Reserved
+      </p>
+    </div>
+
+  </footer>
+
+
+
+
+
+  <!-- 
+    - #GO TO TOP
+  -->
+
+  <a href="#top" class="go-top  active" aria-label="Go To Top" data-go-top>
+    <ion-icon name="arrow-up-outline"></ion-icon>
+  </a>
+
+
+
+
+
+  <!-- 
+    - custom js link
+  -->
+  <script src="./assets/js/script.js"></script>
+
+  <!-- 
+    - ionicon link
+  -->
+  <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+  <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+
+</body>
+
+</html>
