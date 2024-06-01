@@ -1,0 +1,716 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>BoonGrowth</title>
+
+  <!-- 
+    - favicon
+  -->
+  <link rel="shortcut icon" href="./favicon.svg" type="image/svg+xml">
+
+  <!-- 
+    - custom css link
+  -->
+  <link rel="stylesheet" href="./assets/css/style.css">
+
+  <!-- 
+    - google font link
+  -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&family=Source+Sans+Pro:wght@600;700&display=swap"
+    rel="stylesheet">
+    <style>
+              .blog-post {
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            margin: 20px auto;
+            padding: 20px;
+            max-width: 600px;
+        }
+
+        #postTitle {
+            font-size: 24px;
+            color: #333;
+            margin-bottom: 10px;
+        }
+
+        #postImage {
+            width: 100%;
+            border-radius: 10px;
+            margin-bottom: 10px;
+        }
+
+        #postContent {
+            color: #666;
+            line-height: 1.6;
+        }
+        h2 {
+          color: #1666c4;
+          text-align: center;
+          font-weight: 600;
+          font-size: 24px;
+        }
+        p {
+          text-align: center;
+        }
+      
+    </style>
+</head>
+
+<body id="top">
+
+  <!-- 
+    - #HEADER
+  -->
+
+  <header class="header" data-header>
+    <div class="container">
+
+      <div class="overlay" data-overlay></div>
+
+      <a href="#">
+        <h1 class="logo">Boon</h1>
+      </a>
+
+      <nav class="navbar" data-navbar>
+
+        <div class="navbar-top">
+          <a href="#" class="logo">Boon</a>
+
+          <button class="nav-close-btn" aria-label="Close Menu" data-nav-close-btn>
+            <ion-icon name="close-outline"></ion-icon>
+          </button>
+        </div>
+
+        <ul class="navbar-list">
+
+          <li class="navbar-item">
+            <a href="index.html" class="navbar-link" data-navbar-link>Home</a>
+          </li>
+
+          <li class="navbar-item">
+            <a href="#about" class="navbar-link" data-navbar-link>About</a>
+          </li>
+
+          <li class="navbar-item">
+            <a href="#services" class="navbar-link" data-navbar-link>Services</a>
+          </li>
+
+          <li class="navbar-item">
+            <a href="#features" class="navbar-link" data-navbar-link>Features</a>
+          </li>
+
+          <li class="navbar-item">
+            <a href="#blog" class="navbar-link" data-navbar-link>Login</a>
+          </li>
+
+          <li class="navbar-item">
+            <a href="#" class="navbar-link" data-navbar-link>Open Account</a>
+          </li>
+
+        </ul>
+
+      </nav>
+
+      <a href="#" class="btn">
+        <ion-icon name="chevron-forward-outline" aria-hidden="true"></ion-icon>
+
+        <span>Get A Quote</span>
+      </a>
+
+      <button class="nav-open-btn" aria-label="Open Menu" data-nav-open-btn>
+        <ion-icon name="menu-outline"></ion-icon>
+      </button>
+
+    </div>
+  </header>
+
+
+
+
+
+  <main>
+    <article>
+
+      <!-- 
+        - #HERO
+      -->
+
+      <section class="hero" id="home">
+        <div class="container">
+
+          <div class="hero-content">
+
+            <p class="hero-subtitle"> </p>
+
+            <h2 class="h2 hero-title"> EducationSaver - Your Path to Smart Education Planning  </h2>
+
+            <p class="hero-text">
+         Educational Saving Plans (529 plans)</p>
+
+            <button class="btn">Open an account</button>
+
+          </div>
+
+          
+        </div>
+      </section>
+      
+
+  <!-- Container for Displaying Blog Posts -->
+
+
+  <!-- Firebase JavaScript SDK -->
+  <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-firestore.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-storage.js"></script>
+  <script>
+    // Initialize Firebase
+    var firebaseConfig = {
+  apiKey: "AIzaSyAtVvPjdsj84mWqaG4-7SyjbljCnslZ1SM",
+  authDomain: "hendaa-1.firebaseapp.com",
+  databaseURL: "https://hendaa-1-default-rtdb.firebaseio.com",
+  projectId: "hendaa-1",
+  storageBucket: "hendaa-1.appspot.com",
+  messagingSenderId: "831134776479",
+  appId: "1:831134776479:web:56cd7098fc69cd70a376aa"
+};
+    firebase.initializeApp(firebaseConfig);
+
+    // Firestore database
+    var db = firebase.firestore();
+
+    // Function to fetch and display blog posts
+    function fetchBlogPosts() {
+      db.collection("blogPosts").orderBy("timestamp", "desc").onSnapshot(function(querySnapshot) {
+        document.getElementById("blogList").innerHTML = "";
+        querySnapshot.forEach(function(doc) {
+          var post = doc.data();
+          var div = document.createElement("div");
+          div.classList.add("blog-post");
+          div.innerHTML = `
+            
+            <img id="postImage" src="${post.imageUrl}" alt="Post Image">
+            <h3 id="postTitle">${post.title}</h3>
+            <p id="postContent">${post.content}</p>
+          `;
+          document.getElementById("blogList").appendChild(div);
+        });
+      });
+    }
+
+    // Fetch and display blog posts when the page loads
+    window.onload = function() {
+      fetchBlogPosts();
+    };
+  </script>
+ <section class="section features" id="features">
+        <div class="container">
+<p>   An Educational Saving Investment Plan is a financial strategy designed to help individuals save and invest for their educational expenses. Whether you are planning for your own education or saving for your children's education, having a dedicated investment plan can help you achieve your goals with ease and peace of mind</p>
+
+<br>
+<p class="text">
+ By investing in an educational saving plan, you are preparing for future educational expenses without putting a strain on your current finances. This can provide you with a sense of financial security and stability, knowing that you have a plan in place to cover educational costs.
+</p><br>
+ <figure class="about-banner">
+            <img src="./assets/images/image5.jpg" width="700" height="532" loading="lazy" alt="about banner"
+              class="w-100 banner-animation">
+          </figure>
+  <h2 class="h2 section-title text-center">What makes investing with us worthwhile?</h2>
+
+          <p class="section-text text-center">
+          
+          </p>
+
+          <ul class="grid-list">
+
+            <li>
+              <div class="promo-card bg-gray">
+
+                
+                <h3 class="h3 card-title">  Tax-Advantaged Saving</h3>
+                <p class="card-text">
+                  Explore the tax benefits of our investment plans, including tax-deferred growth and tax-free withdrawals for qualified education expenses.
+                </p>
+                       <h3 class="h3 card-title">Flexible Contribution Options</h3>
+                            <p class="card-text">Tailor your savings strategy with flexible contribution options, whether you prefer periodic payments or lump-sum investments.</p>
+                            
+                       <h3 class="h3 card-title">Diverse Investment Opportunities</h3>
+                            <p class="card-text">Choose from a range of investment options to match your risk tolerance and financial objectives</p>
+                       <h3 class="h3 card-title">Designated Beneficiary</h3>
+                            <p class="card-text">Set up a plan with your child or grandchild as the designated beneficiary, ensuring funds are earmarked for their education</p>
+                            
+                        <h3 class="h3 card-title">Client Support</h3>
+                             <p class="card-text">Access dedicated client support from our team of professionals, providing guidance and assistance every step of the way to help you achieve your financial objectives</p>
+                        <h3 class="h3 card-title">Transparency</h3>
+                             <p class="card-text">Enjoy transparency in our investment process, with clear communication about our strategies, performance, and fees, empowering you to make informed decisions</p>
+                        <h3 class="h3 card-title">Long-Term Focus</h3>
+                             <p class="card-text"> We prioritize long-term wealth accumulation and financial security, helping you build a solid foundation for your future and navigate economic cycles with confidence</p>
+                    
+                    
+                    
+
+                <p class="card-text">
+                </p>
+              </div>
+            </li>
+            
+             <figure class="about-banner">
+            <img src="./assets/images/image5.jpg" width="700" height="532" loading="lazy" alt="about banner"
+              class="w-100 banner-animation">
+          </figure>
+          <h2 class="h2 section-title underline">Benefits of Having an Educational Savings Fund</h2>
+          <p>Here are the benefits of having educational Saver:</p>
+
+          <ul class="features-list">
+
+            <li>
+              <div class="features-card">
+
+                <div class="icon">
+                  <ion-icon name="bulb-outline"></ion-icon>
+                </div>
+
+                <div class="content">
+                  <h3 class="h3 title"> Long-Term Growth Potential</h3>
+
+                  <p class="text">
+                  Capitalize on the power of compound interest for long-term growth, helping to mitigate the impact of future education costs.
+                  </p>
+                </div>
+
+              </div>
+            </li>
+
+            <li>
+              <div class="features-card">
+
+                <div class="icon">
+                  <ion-icon name="color-palette-outline"></ion-icon>
+                </div>
+
+                <div class="content">
+                  <h3 class="h3 title">Financial Discipline </h3>
+
+                  <p class="text">
+                    Cultivate disciplined saving habits with regular contributions, keeping you on track to meet your educational savings targets
+                
+                  </p>
+                </div>
+
+              </div>
+            </li>
+
+          </ul>
+
+          
+            
+          <ul class="features-list">
+
+            <li>
+              <div class="features-card">
+
+                <div class="icon">
+                  <ion-icon name="code-slash-outline"></ion-icon>
+                </div>
+
+                <div class="content">
+                  <h3 class="h3 title">Early Start Advantage
+
+ </h3>
+
+                  <p class="text">
+                  Start investing early to maximize the benefits of compounding interest and secure your child's educational future
+                  <br>
+                  <br>    </p>
+                </div>
+
+              </div>
+            </li>
+
+          </ul>
+
+          
+                              
+          <ul class="features-list">
+
+            <li>
+              <div class="features-card">
+
+                <div class="icon">
+                  <ion-icon name="code-slash-outline"></ion-icon>
+                </div>
+
+                <div class="content">
+                  <h3 class="h3 title">Customization Options
+
+ </h3>
+
+                  <p class="text">
+                  Personalize your savings plan to align with your family's unique needs and financial situation, ensuring a tailored approach to education planning
+                  <br>
+                  <br>
+                             </p>
+                </div>
+
+              </div>
+            </li>
+
+          </ul>
+
+               
+          <ul class="features-list">
+
+            <li>
+              <div class="features-card">
+
+                <div class="icon">
+                  <ion-icon name="code-slash-outline"></ion-icon>
+                </div>
+
+                <div class="content">
+                  <h3 class="h3 title">Peace of Mind
+
+ </h3>
+
+                  <p class="text">
+                  Enjoy peace of mind knowing that funds are earmarked specifically for education expenses, alleviating financial stress during college years
+                  <br>
+                  <br>
+                      </p>
+                </div>
+
+              </div>
+            </li>
+
+          </ul>
+
+          
+                            <ul class="features-list">
+
+            <li>
+              <div class="features-card">
+
+                <div class="icon">
+                  <ion-icon name="code-slash-outline"></ion-icon>
+                </div>
+
+                <div class="content">
+                  <h3 class="h3 title">Transferability
+
+ </h3>
+
+                  <p class="text">
+                  Transfer funds to other family members if the designated beneficiary does not utilize the full amount for education, ensuring flexibility for changing circumstances
+                  <br>    </p>
+                </div>
+
+              </div>
+            </li>
+
+          </ul>
+
+          
+
+    
+               <a class="cta-form-btn" href="savings-plan.html">Learn More</a>
+<br>
+              <figure class="about-banner">
+            <img src="./assets/images/image5.jpg" width="700" height="532" loading="lazy" alt="about banner"
+              class="w-100 banner-animation">
+          </figure>
+       
+
+              </div>
+            </li>
+           
+<h2>At EducationSaver, we understand the importance of investing in education. Take control of your financial future and start planning for your child's education today with our comprehensive educational savings investment plans. Secure their path to success with EducationSaver.</h2>
+
+ 
+
+<p class="text">
+ BoonGrowth your partner in securing your child's educational journey. Our mission is to empower families like yours to invest wisely in education, ensuring a future filled with opportunities. Explore the wealth of information provided below to embark on your path to financial preparedness and academic success
+ <br>
+ <br>
+ <qoute>
+   
+ </qoute>
+
+<h2>Real-Life Examples</h2>
+
+ 
+
+<p> Learn from the experiences of other families who have successfully utilized educational savings investment plans to fund their children's education.Tips and Strategies: Discover practical tips and strategies for optimizing your educational savings plan, from maximizing contributions to selecting the right investment options
+
+ 
+
+<h2>
+Begin your educational Saving with us now
+</h2>
+ 
+
+<p>Investing in your child's education is one of the most important decisions you can make as a parent. With the right educational savings investment plan, you can pave the way for your child's academic success and ensure a brighter future. Start planning today and make your child's dreams a reality
+<br><br>
+ </p>
+          </ul>
+
+        </div>
+      </section>
+        <div id="blogList"></div>
+      <br>
+         <a class="cta-form-btn" href="savings-plan.html">Get Started</a>
+         <br><br>
+
+      <section class="contact" id="contact">
+        <div class="container">
+
+          <h2 class="h2 section-title">Contact Us</h2>
+
+          <p class="card-text">
+            Contact us for more information
+          </p>
+
+          <div class="contact-wrapper">
+
+            <form action="" class="contact-form">
+
+              <div class="wrapper-flex">
+
+                <div class="input-wrapper">
+                  <label for="name">Name*</label>
+
+                  <input type="text" name="name" id="name" required placeholder="Enter Your Name" class="input-field">
+                </div>
+
+                <div class="input-wrapper">
+                  <label for="emai">Email*</label>
+
+                  <input type="text" name="email" id="email" required placeholder="Enter Your Email"
+                    class="input-field">
+                </div>
+
+              </div>
+              <textarea name="message" id="message" required placeholder="Type Your Message"
+                class="input-field"></textarea>
+
+              <button class="cta-form-btn btn"     onclick="send()">Submit</button>
+            </form>
+            </ul>
+          </div>
+        </div>
+      </section>
+  <footer class="footer">
+
+    <div class="footer-top section">
+      <div class="container">
+
+        <div class="footer-brand">
+
+          <a href="#" class="logo">Boon</a>
+
+          <p class="text">
+            All users of our online services are subject to our Privacy Statement and agree to be bound by the Terms of Service. Please review.
+          </p>
+
+          <ul class="social-list">
+
+            <li>
+              <a href="#" class="social-link">
+                <ion-icon name="logo-facebook"></ion-icon>
+              </a>
+            </li>
+
+            <li>
+              <a href="#" class="social-link">
+                <ion-icon name="logo-instagram"></ion-icon>
+              </a>
+            </li>
+
+            <li>
+              <a href="#" class="social-link">
+                <ion-icon name="logo-twitter"></ion-icon>
+              </a>
+            </li>
+
+          </ul>
+
+        </div>
+
+        <ul class="footer-list">
+
+          <li>
+            <p class="footer-list-title">Our links</p>
+          </li>
+
+          <li>
+            <a href="#" class="footer-link">Home</a>
+          </li>
+
+          <li>
+            <a href="#" class="footer-link">About Us</a>
+          </li>
+
+          <li>
+            <a href="#" class="footer-link">Services</a>
+          </li>
+
+          <li>
+            <a href="#" class="footer-link">Team</a>
+          </li>
+
+          <li>
+            <a href="#" class="footer-link">Blog</a>
+          </li>
+
+        </ul>
+
+        <ul class="footer-list">
+
+          <li>
+            <p class="footer-list-title">Our Services</p>
+          </li>
+
+          <li>
+            <a href="#" class="footer-link">Strategy & Research</a>
+          </li>
+
+          <li>
+            <a href="#" class="footer-link">Web Development</a>
+          </li>
+
+          <li>
+            <a href="#" class="footer-link">Web Solution</a>
+          </li>
+
+          <li>
+            <a href="#" class="footer-link">Digital Marketing</a>
+          </li>
+
+          <li>
+            <a href="#" class="footer-link">App Design</a>
+          </li>
+
+        </ul>
+
+        <ul class="footer-list">
+
+          <li>
+            <p class="footer-list-title">Other links</p>
+          </li>
+
+          <li>
+            <a href="#" class="footer-link">FAQ</a>
+          </li>
+
+          <li>
+            <a href="#" class="footer-link">Portfolio</a>
+          </li>
+
+          <li>
+            <a href="#" class="footer-link">Privacy Policy</a>
+          </li>
+
+          <li>
+            <a href="#" class="footer-link">Terms & Conditions</a>
+          </li>
+
+          <li>
+            <a href="#" class="footer-link">Support</a>
+          </li>
+
+        </ul>
+
+        <ul class="footer-list">
+
+          <li>
+            <p class="footer-list-title">Contact Us</p>
+          </li>
+
+          <li class="footer-item">
+
+            <div class="footer-item-icon">
+              <ion-icon name="call"></ion-icon>
+            </div>
+
+            <div>
+              <a href="tel:+2484214313" class="footer-item-link">+248-421-4313</a>
+              <a href="tel:+2486871365" class="footer-item-link">+248-687-1365</a>
+            </div>
+
+          </li>
+
+          <li class="footer-item">
+
+            <div class="footer-item-icon">
+              <ion-icon name="mail"></ion-icon>
+            </div>
+
+            <div>
+              <a href="mailto:info@desinic.com" class="footer-item-link">info@desinic.com</a>
+              <a href="mailto:help@desinic.com" class="footer-item-link">help@desinic.com</a>
+            </div>
+
+          </li>
+
+          <li class="footer-item">
+
+            <div class="footer-item-icon">
+              <ion-icon name="location"></ion-icon>
+            </div>
+
+            <address class="footer-item-link">
+              Pontiac, Michigan, United States of America
+            </address>
+
+          </li>
+
+        </ul>
+
+      </div>
+    </div>
+
+    <div class="footer-bottom">
+      <p class="copyright">
+        &copy; 2022 <a href="#" class="copyright-link">codewithsadee</a>. All Right Reserved
+      </p>
+    </div>
+
+  </footer>
+
+
+
+
+
+  <!-- 
+    - #GO TO TOP
+  -->
+
+  <a href="#top" class="go-top  active" aria-label="Go To Top" data-go-top>
+    <ion-icon name="arrow-up-outline"></ion-icon>
+  </a>
+
+
+
+
+
+  <!-- 
+    - custom js link
+  -->
+  <script src="./assets/js/script.js"></script>
+
+  <!-- 
+    - ionicon link
+  -->
+  <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+  <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+
+</body>
+
+</html>
