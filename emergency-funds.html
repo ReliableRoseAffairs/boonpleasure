@@ -1,0 +1,598 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>BoonGrowth</title>
+
+  <!-- 
+    - favicon
+  -->
+  <link rel="shortcut icon" href="./favicon.svg" type="image/svg+xml">
+
+  <!-- 
+    - custom css link
+  -->
+  <link rel="stylesheet" href="./assets/css/style.css">
+
+  <!-- 
+    - google font link
+  -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&family=Source+Sans+Pro:wght@600;700&display=swap"
+    rel="stylesheet">
+    <style>
+              .blog-post {
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            margin: 20px auto;
+            padding: 20px;
+            max-width: 600px;
+        }
+
+        #postTitle {
+            font-size: 24px;
+            color: #333;
+            margin-bottom: 10px;
+        }
+
+        #postImage {
+            width: 100%;
+            border-radius: 10px;
+            margin-bottom: 10px;
+        }
+
+        #postContent {
+            color: #666;
+            line-height: 1.6;
+        }
+        h2 {
+          color: #1666c4;
+          text-align: center;
+          font-weight: 600;
+          font-size: 24px;
+        }
+        p {
+          text-align: center;
+        }
+      
+    </style>
+</head>
+
+<body id="top">
+
+  <!-- 
+    - #HEADER
+  -->
+
+  <header class="header" data-header>
+    <div class="container">
+
+      <div class="overlay" data-overlay></div>
+
+      <a href="index.html">
+        <h1 class="logo">Boon</h1>
+      </a>
+
+      <nav class="navbar" data-navbar>
+
+        <div class="navbar-top">
+          <a href="index.html" class="logo">Boon</a>
+
+          <button class="nav-close-btn" aria-label="Close Menu" data-nav-close-btn>
+            <ion-icon name="close-outline"></ion-icon>
+          </button>
+        </div>
+
+        <ul class="navbar-list">
+
+          <li class="navbar-item">
+            <a href="index.html" class="navbar-link" data-navbar-link>Home</a>
+          </li>
+
+          <li class="navbar-item">
+            <a href="about.html" class="navbar-link" data-navbar-link>About</a>
+          </li>
+
+          <li class="navbar-item">
+            <a href="investment-plans.html" class="navbar-link" data-navbar-link>Plans</a>
+          </li>
+
+          <li class="navbar-item">
+            <a href="blog.html" class="navbar-link" data-navbar-link>Blog</a>
+          </li>
+
+          <li class="navbar-item">
+            <a href="boon-signin.html" class="navbar-link" data-navbar-link>Login</a>
+          </li>
+
+          <li class="navbar-item">
+            <a href="create-account.html" class="navbar-link" data-navbar-link>Open Account</a>
+          </li>
+
+        </ul>
+
+      </nav>
+
+      <a href="#" class="btn">
+        <ion-icon name="chevron-forward-outline" aria-hidden="true"></ion-icon>
+
+        <span>Get A Quote</span>
+      </a>
+
+      <button class="nav-open-btn" aria-label="Open Menu" data-nav-open-btn>
+        <ion-icon name="menu-outline"></ion-icon>
+      </button>
+
+    </div>
+  </header>
+
+
+
+
+
+  <main>
+    <article>
+
+      <!-- 
+        - #HERO
+      -->
+
+      <section class="hero" id="home">
+        <div class="container">
+
+          <div class="hero-content">
+
+            <p class="hero-subtitle"> </p>
+
+            <h2 class="h2 hero-title">Emergency Funds </h2>
+
+            <p class="hero-text">
+            lnvesting in your retirement is not just about securing your future; it's about investing in the life you've always dreamed of living</p>
+
+            <button class="btn">Open an account</button>
+
+          </div>
+
+          
+        </div>
+      </section>
+      
+
+  <!-- Container for Displaying Blog Posts -->
+
+
+  <!-- Firebase JavaScript SDK -->
+  <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-firestore.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-storage.js"></script>
+  <script>
+    // Initialize Firebase
+    var firebaseConfig = {
+  apiKey: "AIzaSyAtVvPjdsj84mWqaG4-7SyjbljCnslZ1SM",
+  authDomain: "hendaa-1.firebaseapp.com",
+  databaseURL: "https://hendaa-1-default-rtdb.firebaseio.com",
+  projectId: "hendaa-1",
+  storageBucket: "hendaa-1.appspot.com",
+  messagingSenderId: "831134776479",
+  appId: "1:831134776479:web:56cd7098fc69cd70a376aa"
+};
+    firebase.initializeApp(firebaseConfig);
+
+    // Firestore database
+    var db = firebase.firestore();
+
+    // Function to fetch and display blog posts
+    function fetchBlogPosts() {
+      db.collection("blogPosts").orderBy("timestamp", "desc").onSnapshot(function(querySnapshot) {
+        document.getElementById("blogList").innerHTML = "";
+        querySnapshot.forEach(function(doc) {
+          var post = doc.data();
+          var div = document.createElement("div");
+          div.classList.add("blog-post");
+          div.innerHTML = `
+            
+            <img id="postImage" src="${post.imageUrl}" alt="Post Image">
+            <h3 id="postTitle">${post.title}</h3>
+            <p id="postContent">${post.content}</p>
+          `;
+          document.getElementById("blogList").appendChild(div);
+        });
+      });
+    }
+
+    // Fetch and display blog posts when the page loads
+    window.onload = function() {
+      fetchBlogPosts();
+    };
+  </script>
+ <section class="section features" id="features">
+        <div class="container">
+<p>An emergency savings fund serves as a lifeline during unexpected financial challenges, acting as a reliable safety net when confronted with unforeseen expenses. Therefore, it can be likened to a dependable guardian you turn to in times of significant financial strain beyond your immediate influence. It's a reservoir of funds that should be gradually accumulated and preserved, rather than regularly accessed for short-term needs</p>
+
+<br>
+<p class="text">
+ Life has a way of throwing unexpected curveballs our way, but with an emergency fund, you can turn the tables and outsmart life's surprises. Emergency funds prove invaluable during periods of job loss, health crises, natural disasters, and other unforeseen challenges
+</p><br>
+ <figure class="about-banner">
+            <img src="./assets/images/image5.jpg" width="700" height="532" loading="lazy" alt="about banner"
+              class="w-100 banner-animation">
+          </figure>
+  <h2 class="h2 section-title text-center">What makes investing with us worthwhile?</h2>
+
+          <p class="section-text text-center">
+          
+          </p>
+
+          <ul class="grid-list">
+
+            <li>
+              <div class="promo-card bg-gray">
+
+                
+                <h3 class="h3 card-title">Expertise</h3>
+                <p class="card-text">
+                  Benefit from our team's expertise and experience in financial markets, ensuring your investments are managed with care and precision
+                </p>
+                       <h3 class="h3 card-title">Diverse Portfolio</h3>
+                            <p class="card-text">Gain access to a diverse range of investment opportunities, carefully curated to align with your financial goals and risk tolerance</p>
+                            
+                       <h3 class="h3 card-title">Risk Management</h3>
+                            <p class="card-text">Our risk management strategies help protect your investments from market volatility, preserving capital and minimizing downside risk</p>
+                       <h3 class="h3 card-title">Innovative Technology</h3>
+                            <p class="card-text">Leverage cutting-edge technology and data analytics to optimize investment decisions and adapt to changing market conditions in real-time</p>
+                            
+                        <h3 class="h3 card-title">Client Support</h3>
+                             <p class="card-text">Access dedicated client support from our team of professionals, providing guidance and assistance every step of the way to help you achieve your financial objectives</p>
+                        <h3 class="h3 card-title">Transparency</h3>
+                             <p class="card-text">Enjoy transparency in our investment process, with clear communication about our strategies, performance, and fees, empowering you to make informed decisions</p>
+                        <h3 class="h3 card-title">Long-Term Focus</h3>
+                             <p class="card-text"> We prioritize long-term wealth accumulation and financial security, helping you build a solid foundation for your future and navigate economic cycles with confidence</p>
+                    
+                    
+                    
+
+                <p class="card-text">
+                </p>
+              </div>
+            </li>
+            
+          
+          <h2 class="h2 section-title underline">Advantages of Having an Emergency Savings Fund</h2>
+          <p>Here are the benefits of having emergency funds:</p>
+
+          <ul class="features-list">
+
+            <li>
+              <div class="features-card">
+
+                <div class="icon">
+                  <ion-icon name="bulb-outline"></ion-icon>
+                </div>
+
+                <div class="content">
+                  <h3 class="h3 title">Protect your downside</h3>
+
+                  <p class="text">
+                    An emergency fund has the major function of putting your mind at rest in the face of a crisis, as opposed to when you have no investment whatsoever to help abate the sudden impact of an emergency. It can serve as a stress reduction agent. Not having an emergency fund means you will usually need external help or loans whenever you run into money challenges.
+                  </p>
+                </div>
+
+              </div>
+            </li>
+
+            <li>
+              <div class="features-card">
+
+                <div class="icon">
+                  <ion-icon name="color-palette-outline"></ion-icon>
+                </div>
+
+                <div class="content">
+                  <h3 class="h3 title">Protection of other investment goals</h3>
+
+                  <p class="text">
+                    With an emergency fund set up, there will be no need to liquidate other investments targeted at certain objectives you are building up to.
+                
+                  </p>
+                </div>
+
+              </div>
+            </li>
+
+          </ul>
+
+          
+            
+          <ul class="features-list">
+
+            <li>
+              <div class="features-card">
+
+                <div class="icon">
+                  <ion-icon name="code-slash-outline"></ion-icon>
+                </div>
+
+                <div class="content">
+                  <h3 class="h3 title">Financial discipline
+
+ </h3>
+
+                  <p class="text">
+                  Stashing money away to hedge against life’s risks can help build your financial discipline and help cut down drastically on frivolous spending
+                  <br>
+                  <br>
+                  <strong>Low financial freedom: </strong> With an emergency fund, you can avoid borrowing and putting yourself in further distress when there is a crisis
+                  </p>
+                </div>
+
+              </div>
+            </li>
+               <a class="cta-form-btn" href="savings-plan.html">Learn More</a>
+<br>
+
+       
+
+              </div>
+            </li>
+           
+<h2>How much should I have in my Emergency Fund?</h2>
+
+ 
+
+<p class="text">
+ The generally accepted amount one should target annually, based on suggestions from top advisors globally, is six months of living expenses. That is you should work towards gathering up an amount that can cater to your living expenses for six months in case you run into an emergency that blocks your income flow for six months
+ <br>
+ <br>
+ <qoute>
+   For example, if your monthly living expense is $2,000, your emergency fund should be $2,000 X 6 = $12,000. You can build this over 2 years or less based on your saving plans by saving $200 monthly.
+ </qoute>
+
+<h2>How do I set up my Emergency Fund?</h2>
+
+ 
+
+<p>To save money for six months of your living expenses, you will have to first know how much you spend in a month or weekly. Multiply that amount by six. You can divide this amount by 12 or 24 to determine how much you need to set aside monthly as savings to hit your emergency fund goal.
+<br><br>
+More importantly, automate the process of saving up for this fund.
+<br><br>
+Although an emergency savings fund is set up to help you prepare for unforeseen circumstances, you also earn some interest on it.</p>
+
+ 
+
+<h2>
+Begin your Emergency Fund on Boongrowth Capital
+</h2>
+ 
+
+<p>With the Boongrowth emergency plan, you can build up for emergencies. This provides you with the needed discipline to actually build up. Secondly, your funds are invested in secure vehicles like treasury bills and government bonds which have been adjudged to be the most secure forms of investment in the country. With that, your funds are not only secure, but they also earn you interest as they build up. And when you need to withdraw your funds, it only takes a 10 to 15 minutes processing period for the funds to move from BoonGrowth Emergency Fund account to your bank account, after which you can attend to your emergencies.
+<br><br>
+ </p>
+          </ul>
+
+        </div>
+      </section>
+        <div id="blogList"></div>
+      <br>
+         <a class="cta-form-btn" href="savings-plan.html">Get Started</a>
+         <br><br>
+
+      <section class="contact" id="contact">
+        <div class="container">
+
+          <h2 class="h2 section-title">Contact Us</h2>
+
+          <p class="card-text">
+            Contact us for more information
+          </p>
+
+          <div class="contact-wrapper">
+
+            <form action="" class="contact-form">
+
+              <div class="wrapper-flex">
+
+                <div class="input-wrapper">
+                  <label for="name">Name*</label>
+
+                  <input type="text" name="name" id="name" required placeholder="Enter Your Name" class="input-field">
+                </div>
+
+                <div class="input-wrapper">
+                  <label for="emai">Email*</label>
+
+                  <input type="text" name="email" id="email" required placeholder="Enter Your Email"
+                    class="input-field">
+                </div>
+
+              </div>
+              <textarea name="message" id="message" required placeholder="Type Your Message"
+                class="input-field"></textarea>
+
+              <button class="cta-form-btn btn"     onclick="send()">Submit</button>
+            </form>
+            </ul>
+          </div>
+        </div>
+      </section>
+  <footer class="footer">
+
+    <div class="footer-top section">
+      <div class="container">
+
+        <div class="footer-brand">
+
+          <a href="#" class="logo">Boon</a>
+
+          <p class="text">
+            All users of our online services are subject to our Privacy Statement and agree to be bound by the Terms of Service. Please review.
+          </p>
+
+          <ul class="social-list">
+
+            <li>
+              <a href="https://www.facebook.com/profile.php?id=61559870982135" class="social-link">
+                <ion-icon name="logo-facebook"></ion-icon>
+              </a>
+            </li>
+
+            <li>
+              <a href="#" class="social-link">
+                <ion-icon name="logo-instagram"></ion-icon>
+              </a>
+            </li>
+
+            <li>
+              <a href="#" class="social-link">
+                <ion-icon name="logo-twitter"></ion-icon>
+              </a>
+            </li>
+
+          </ul>
+
+        </div>
+
+        <ul class="footer-list">
+
+          <li>
+            <p class="footer-list-title">Our links</p>
+          </li>
+
+          <li>
+            <a href="index.html" class="footer-link">Home</a>
+          </li>
+
+          <li>
+            <a href="about.html" class="footer-link">About Us</a>
+          </li>
+
+          <li>
+            <a href="investment-plans.html" class="footer-link">Services</a>
+          </li>
+
+
+
+          <li>
+            <a href="blog.html" class="footer-link">Blog</a>
+          </li>
+
+        </ul>
+
+        <ul class="footer-list">
+
+          <li>
+            <p class="footer-list-title">Our Services</p>
+          </li>
+
+          <li>
+            <a href="interest.html" class="footer-link">Interest</a>
+          </li>
+
+          <li>
+            <a href="#" class="footer-link">ETFs</a>
+          </li>
+
+          <li>
+            <a href="wealth.html" class="footer-link">Wealth</a>
+          </li>
+
+          
+
+
+        </ul>
+
+        <ul class="footer-list">
+
+          <li>
+            <p class="footer-list-title">Other links</p>
+          </li>
+
+          <li>
+            <a href="faq.html" class="footer-link">FAQ</a>
+          </li>
+
+
+
+          <li>
+            <a href="privacy.html" class="footer-link">Privacy Policy</a>
+          </li>
+
+          <li>
+            <a href="terms.html" class="footer-link">Terms & Conditions</a>
+          </li>
+
+          
+
+        </ul>
+
+        <ul class="footer-list">
+
+          <li>
+            <p class="footer-list-title">Contact Us</p>
+          </li>
+
+
+          <li class="footer-item">
+
+            <div class="footer-item-icon">
+              <ion-icon name="mail"></ion-icon>
+            </div>
+
+            <div>
+              <a href="mailto:boongrow6@gmail.com" class="footer-item-link">info.boongrowth.com</a>
+              <a href="mailto:boongrow6@gmail.com" class="footer-item-link">help@boongrowth.com</a>
+            </div>
+
+          </li>
+
+          
+
+        </ul>
+
+      </div>
+    </div>
+
+    <div class="footer-bottom">
+      <p class="copyright">
+        &copy; 2024 <a href="index.html" class="copyright-link">Boongrowth</a>. All Right Reserved
+      </p>
+    </div>
+
+  </footer>
+
+
+
+
+
+  <!-- 
+    - #GO TO TOP
+  -->
+
+  <a href="#top" class="go-top  active" aria-label="Go To Top" data-go-top>
+    <ion-icon name="arrow-up-outline"></ion-icon>
+  </a>
+
+
+
+
+
+  <!-- 
+    - custom js link
+  -->
+  <script src="./assets/js/script.js"></script>
+  <script src="button.js"></script>
+
+  <!-- 
+    - ionicon link
+  -->
+  <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+  <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+
+</body>
+
+</html>
