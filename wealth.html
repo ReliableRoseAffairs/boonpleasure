@@ -1,0 +1,931 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>BoonGrowth</title>
+
+  <!-- 
+    - favicon
+  -->
+  <link rel="shortcut icon" href="./favicon.svg" type="image/svg+xml">
+
+  <!-- 
+    - custom css link
+  -->
+  <link rel="stylesheet" href="./assets/css/style.css">
+
+  <!-- 
+    - google font link
+  -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&family=Source+Sans+Pro:wght@600;700&display=swap"
+    rel="stylesheet">
+
+    <style>
+      
+      #success {
+  background-color: #dff0d8;
+  border-color: #d6e9c6;
+  color: #3c763d;
+}
+
+#Alert {
+  background-color: #f2dede;
+  border-color: #ebccd1;
+  color: #a94442;
+}
+.blog-post {
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            margin: 20px auto;
+            padding: 20px;
+            max-width: 600px;
+        }
+
+        #postTitle {
+            font-size: 24px;
+            color: #333;
+            margin-bottom: 10px;
+        }
+
+        #postImage {
+            width: 100%;
+            border-radius: 10px;
+            margin-bottom: 10px;
+        }
+
+        #postContent {
+            color: #666;
+            line-height: 1.6;
+        }
+           #postDate {
+            color: darkgreen;
+            font-size: 14px;
+            margin-top: 5px;
+        }
+          .blog-card {
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            margin: 20px auto;
+            max-width: 600px;
+        }
+
+        .card-banner img {
+            width: 100%;
+            border-top-left-radius: 10px;
+            border-top-right-radius: 10px;
+        }
+
+        .card-tag {
+            display: block;
+            background-color: #007bff;
+            color: #fff;
+            padding: 5px 10px;
+            border-radius: 5px;
+            margin-top: 10px;
+            text-decoration: none;
+            font-size: 14px;
+        }
+
+        .card-title {
+            font-size: 24px;
+            color: #007;
+            margin: 10px 0;
+        }
+        .collapsible-content {
+            display: none;
+        }
+
+        .collapsible-content.active {
+            display: block;
+        }
+    
+        
+        section {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 16px;
+            padding: 16px;
+        }
+        .card {
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            width: 330px;
+            padding: 16px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        .card-heading {
+            color: #1666c4;
+            font-size: 1.5em;
+            margin-bottom: 8px;
+            font-weight: 600;
+        }
+        .card-content {
+            color: black;
+            font-size: 1em;
+            margin-bottom: 16px;
+        }
+        .card-link {
+            color: #1666c4;
+            text-decoration: none;
+            font-weight: ;
+        }
+        .card-link:hover {
+            text-decoration: underline;
+        }
+    
+    </style>
+</head>
+
+<body id="top">
+
+  <!-- 
+    - #HEADER
+  -->
+
+  <header class="header" data-header>
+    <div class="container">
+
+      <div class="overlay" data-overlay></div>
+
+      <a href="index.html">
+        <h1 class="logo">Boon</h1>
+      </a>
+
+      <nav class="navbar" data-navbar>
+
+        <div class="navbar-top">
+          <a href="index.html" class="logo">Boon</a>
+
+          <button class="nav-close-btn" aria-label="Close Menu" data-nav-close-btn>
+            <ion-icon name="close-outline"></ion-icon>
+          </button>
+        </div>
+
+        <ul class="navbar-list">
+
+          <li class="navbar-item">
+            <a href="#home" class="navbar-link" data-navbar-link>Home</a>
+          </li>
+
+          <li class="navbar-item">
+            <a href="about.html" class="navbar-link" data-navbar-link>About</a>
+          </li>
+
+          <li class="navbar-item">
+            <a href="investment-plans.html" class="navbar-link" data-navbar-link>Services</a>
+          </li>
+
+          <li class="navbar-item">
+            <a href="contact-boon.html" class="navbar-link" data-navbar-link>Contact us</a>
+          </li>
+
+          <li class="navbar-item">
+            <a href="create-account.html" class="navbar-link" data-navbar-link>Register An Account</a>
+          </li>
+
+          <li class="navbar-item">
+            <a href="boon-signin.html" class="navbar-link" data-navbar-link>Login</a>
+          </li>
+
+        </ul>
+
+      </nav>
+
+      <a href="boon-signup.html" class="btn">
+        <ion-icon name="chevron-forward-outline" aria-hidden="true"></ion-icon>
+
+        <span>Open an Account</span>
+      </a>
+
+      <button class="nav-open-btn" aria-label="Open Menu" data-nav-open-btn>
+        <ion-icon name="menu-outline"></ion-icon>
+      </button>
+
+    </div>
+  </header>
+
+
+
+
+
+  <main>
+    <article>
+
+      <!-- 
+        - #HERO
+      -->
+
+      <section class="hero" id="home">
+        <div class="container">
+
+          <div class="hero-content">
+
+            <p class="hero-subtitle">Let's grow together.</p>
+
+            <h2 class="h2 hero-title">Easily invest automatically</h2>
+
+            <p class="hero-text">
+              With Boongrowth Wealth, investing is relaxed, intelligent and automated. Start already from $10  savings amount
+                 </p>
+
+                <button class="btn" onclick="redirectTocreate()">Get Started</button>
+
+          </div>
+
+          
+
+        </div>
+      </section>
+
+
+
+
+
+      <!-- 
+        - #ABOUT
+      -->
+
+      <section class="section about" id="about">
+        <div class="container">
+
+       
+          <div class="about-content">
+
+        
+
+          
+
+            <ul class="stats-list">
+
+              <li class="stats-card">
+                <p class="h3 stats-title">$1M+</p>
+
+                <p class="stats-text">Clients build their wealth with Boon</p>
+              </li>
+
+  <li class="stats-card">
+                <p class="h3 stats-title">$11+ Billion </p>
+
+                <p class="stats-text"> in Clients Assets</p>
+              </li>
+
+              <li class="stats-card">
+                <p class="h3 stats-title">Security</p>
+
+                <p class="stats-text">Custody of securities with
+a American custodian bank</p>
+              </li>
+
+            </ul>
+
+          </div>
+
+        </div>
+      </section>
+
+
+
+
+
+      <!-- 
+        - #SERVICE
+      -->
+
+      <section class="section service" id="services">
+        <div class="container">
+
+          <h2 class="h2 section-title underline">All in one broker
+          <span class="spano">No matter your investment strategy, we're here to assist you in maximizing your financial potential.</span></h2>
+
+          <ul class="service-list">
+
+            <li>
+              <div class="service-card">
+
+                <div class="card-icon">
+                  <ion-icon name="telescope-outline"></ion-icon>
+                </div>
+
+                <h3 class="h3 title"><span class="spano"></span>Invest globally with the World Portfolios</h3>
+
+                <p class="text">
+                 Invest globally diversified and optionally with ESG focus in all major asset classes.
+                </p>
+ <button class="more" onclick="redirectTowealthone()">Learn More</button>
+
+                
+
+              </div>
+            </li>
+
+            <li>
+              <div class="service-card">
+
+                <div class="card-icon">
+                  <ion-icon name="desktop-outline"></ion-icon>
+                </div>
+
+                <h3 class="h3 title"><span class="spano"> </span>Invest with a special investment focus</h3>
+
+                <p class="text">
+                  Specific investment ideas and special strategies - with portfolios such as InterestInvest, Megatrends, Value or Allweather.
+                </p>
+                <button class="more" onclick="redirectTowealthone()">Invest Now</button>
+                
+             
+
+              </div>
+            </li>
+
+            <li>
+              <div class="service-card">
+
+                <div class="card-icon">
+                  <ion-icon name="globe-outline"></ion-icon>
+                </div>
+
+                <h3 class="h3 title"><span class="spano">Wealth</span>How to invest successfully?</h3>
+
+                <p class="text">
+Learn more about stock markets and investing
+                </p>
+<button class="more" onclick="redirectTocreate()">Invest now</button>
+
+
+            
+
+              </div>
+            </li>
+
+          </ul>
+  </div>
+      </section>
+
+
+
+
+
+      <!-- 
+        - #FEATURES
+      -->
+
+      <section class="section features" id="features">
+        <div class="container">
+
+          <h2 class="h2 section-title underline">Investing without the hassle</h2>
+
+          <ul class="features-list">
+
+            <li>
+              <div class="features-card">
+
+                <div class="icon">
+                  <ion-icon name="bulb-outline"></ion-icon>
+                </div>
+
+                <div class="content">
+                  <h3 class="h3 title">Profile Creation </h3>
+
+                  <p class="text">
+                    Portfolios that suit you: we offer different investment strategies to help you achieve your individual goals.
+                  </p>
+                </div>
+
+              </div>
+            </li>
+
+          <ul class="features-list">
+            <li>
+              <div class="features-card">
+
+                <div class="icon">
+                  <ion-icon name="color-palette-outline"></ion-icon>
+                </div>
+
+                <div class="content">
+                  <h3 class="h3 title">Ongoing portifolio Monitoring</h3>
+
+                  <p class="text">
+                    We always keep an eye on your portfolio and automatically adjust it to market events.
+                  </p>
+                </div>
+
+              </div>
+            </li>
+
+          </ul>
+
+          
+
+          <ul class="features-list">
+
+            <li>
+              <div class="features-card">
+
+                <div class="icon">
+                  <ion-icon name="code-slash-outline"></ion-icon>
+                </div>
+
+                <div class="content">
+                  <h3 class="h3 title">Choice of low-cost ETFs</h3>
+
+                  <p class="text">
+                    We always select the most advantageous ETFs for your portfolio from over 2,000 ETFs in a multi-stage process.
+                  </p>
+                </div>
+
+              </div>
+            </li>
+
+            
+          </ul>
+                    <ul class="features-list">
+
+            <li>
+              <div class="features-card">
+
+                <div class="icon">
+                  <ion-icon name="code-slash-outline"></ion-icon>
+                </div>
+
+                <div class="content">
+                  <h3 class="h3 title">Personal customer service</h3>
+
+                  <p class="text">
+                    Professional and reliable: Our team is always there for you. By phone, chat as well as by e-mail.
+                  </p>
+                </div>
+
+              </div>
+            </li>
+
+            
+          </ul>
+          <ul class="features-list">
+
+            <li>
+              <div class="features-card">
+
+                <div class="icon">
+                  <ion-icon name="code-slash-outline"></ion-icon>
+                </div>
+
+                <div class="content">
+                  <h3 class="h3 title">Always and everywhere available</h3>
+
+                  <p class="text">
+You can access your custody account at any time via  web. There is neither a minimum holding period nor a minimum term.
+                  </p>
+                </div>
+
+              </div>
+            </li>
+
+            
+          </ul>
+          
+                    <ul class="features-list">
+
+            <li>
+              <div class="features-card">
+
+                <div class="icon">
+                  <ion-icon name="code-slash-outline"></ion-icon>
+                </div>
+
+                <div class="content">
+                  <h3 class="h3 title">Stay flexible</h3>
+
+                  <p class="text">
+                    Build up assets gradually with savings plans and retire relaxed with flexible withdrawal plans
+                  </p>
+                </div>
+
+              </div>
+            </li>
+
+            
+          </ul>
+        </div>
+      </section>
+      <hr>
+      
+      
+      
+
+    <section class="section promo" aria-label="promo">
+        <div class="container">
+
+          <h2 class="h2 section-title text-center">Strategically well positioned</h2>
+
+          <p class="section-text text-center">
+            With investment strategies that align with your values and goals. With Boongrowth Wealth, you can choose from many different investment strategies - from globally diversified to more specific.
+          
+          
+          </p>
+          <br>
+          <p class="section-text text-center">
+            
+            </p>
+          <ul class="grid-list">
+
+            <li>
+              <div class="promo-card bg-gray">
+
+                <div class="card-icon">
+                  <ion-icon name="share-social-outline" aria-hidden="true"></ion-icon>
+                </div>
+
+                <h3 class="h3 card-title">Determine investment type</h3>
+
+                <p class="card-text">
+                  With the help of a short questionnaire, we find out more about your investment goals and investment horizon and thus determine your risk tolerance.
+                </p>
+
+             
+
+              </div>
+            </li>
+
+            <li>
+              <div class="promo-card bg-gray">
+
+                <div class="card-icon">
+                  <ion-icon name="pricetags-outline" aria-hidden="true"></ion-icon>
+                </div>
+
+                <h3 class="h3 card-title">Select investment strategy</h3>
+
+                <p class="card-text">
+                  Now choose a suitable investment strategy based on your investment type - from globally diversified strategies to value and robust allweather strategies.
+                </p>
+
+
+
+              </div>
+            </li>
+
+            <li>
+              <div class="promo-card bg-gray">
+
+                <div class="card-icon">
+                  <ion-icon name="shield-checkmark-outline" aria-hidden="true"></ion-icon>
+                </div>
+
+                <h3 class="h3 card-title">Sit back and let us
+do the work</h3>
+
+                <p class="card-text">
+                  We put together a portfolio of low-cost, diversified ETFs for you, monitor it on an ongoing basis and adjust it automatically if necessary.
+                </p>
+
+             
+
+              </div>
+            </li>
+
+          </ul>
+
+        </div>
+      </section>
+
+<hr>
+   
+      <!-- 
+        - #BLOG
+      -->
+      
+
+
+  <!-- Firebase JavaScript SDK -->
+  <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-firestore.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-storage.js"></script>
+  <script>
+    // Initialize Firebase
+    var firebaseConfig = {
+  apiKey: "AIzaSyAtVvPjdsj84mWqaG4-7SyjbljCnslZ1SM",
+  authDomain: "hendaa-1.firebaseapp.com",
+  databaseURL: "https://hendaa-1-default-rtdb.firebaseio.com",
+  projectId: "hendaa-1",
+  storageBucket: "hendaa-1.appspot.com",
+  messagingSenderId: "831134776479",
+  appId: "1:831134776479:web:56cd7098fc69cd70a376aa"
+};
+    firebase.initializeApp(firebaseConfig);
+
+    // Firestore database
+    var db = firebase.firestore();
+
+    // Function to fetch and display blog posts
+    function fetchBlogPosts() {
+      db.collection("blogPosts").orderBy("timestamp", "desc").onSnapshot(function(querySnapshot) {
+        document.getElementById("blogList").innerHTML = "";
+        querySnapshot.forEach(function(doc) {
+          var post = doc.data();
+          var div = document.createElement("div");
+          div.classList.add("blog-post");
+          div.innerHTML = `
+              <div class="card-banner">
+              <img src="${post.imageUrl}" alt="Post Image">
+            </div>
+            <h3 class="card-title">${post.title}</h3>
+        <p class="card-content">${post.content}</p>
+             <p id="postDate">Posted on: ${new Date(post.timestamp.toDate()).toDateString()}</p>
+        
+          `;
+          document.getElementById("blogList").appendChild(div);
+        });
+      });
+    }
+
+    // Fetch and display blog posts when the page loads
+    window.onload = function() {
+      fetchBlogPosts();
+    };
+  </script>
+
+          <section class="section blog" id="blog">
+        <div class="container">
+
+          <h2 class="h2 section-title underline">News Feed</h2>
+              <div id="blogList"></div>
+
+    </article>
+  </main>
+       <section class="section about" id="about">
+        <div class="container">
+
+          <figure class="about-banner">
+            <img src="./assets/images/happyinvestor.jpg" width="700" height="532" loading="lazy" alt="about banner"
+              class="w-100 banner-animation">
+          </figure>
+
+  <div class="about-content">
+
+            <h2 class="h2 section-title underline">We're available to assist you</h2>
+
+<p class="about-text">The funds under our management do not belong solely to us. They are the collective assets of numerous individuals spread across various regions, each striving to meet their key financial objectives. Our presence spans 70 offices across 30 diverse locations, blending local knowledge with global service excellence.</p>
+
+ <section class="cta">
+        <div class="container">
+                      <p class="card-text"> </p>
+            
+
+          <div class="title-wrapper">
+            <h2 class="cta-title">Start your new account today</h2>
+
+            <p class="cta-text">
+              and potentially earn up to $200 with qualifying activities.
+            </p>
+          </div>
+
+          
+
+                <button class="cta-form-btn" onclick="redirectTocreate()">Get Started</button>
+          </form>
+
+        </div>
+      </section>     
+      <div id="success" class="alert hidden">
+  Success! Your request was processed successfully.
+</div>
+
+<div id="Alert" class="alert hidden">
+  Oops! Something went wrong. Please try again later.
+</div>
+
+      
+      <section class="contact" id="contact">
+        <div class="container">
+
+          <h2 class="h2 section-title">Contact Us</h2>
+
+          <p class="card-text">
+            Contact us for more information
+          </p>
+
+          <div class="contact-wrapper">
+
+            <form action="" class="contact-form">
+
+              <div class="wrapper-flex">
+
+                <div class="input-wrapper">
+                  <label for="name">Name*</label>
+
+                  <input type="text" name="name" id="name" required placeholder="Enter Your Name" class="input-field">
+                </div>
+
+                <div class="input-wrapper">
+                  <label for="emai">Email*</label>
+
+                  <input type="text" name="email" id="email" required placeholder="Enter Your Email"
+                    class="input-field">
+                </div>
+
+              </div>
+              <textarea name="message" id="message" required placeholder="Type Your Message"
+                class="input-field"></textarea>
+
+              <button class="cta-form-btn btn"     onclick="send()">Submit</button>
+            </form>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+  <!-- 
+    - #FOOTER
+  -->
+
+  <footer class="footer">
+
+    <div class="footer-top section">
+      <div class="container">
+
+        <div class="footer-brand">
+
+          <a href="#" class="logo">Boon</a>
+
+          <p class="text">
+            Let's collaborate to identify your current priorities and work towards building a brighter future for you and your family.
+          </p>
+
+          <ul class="social-list">
+
+            <li>
+              <a href="https://www.facebook.com/profile.php?id=61559870982135" class="social-link">
+                <ion-icon name="logo-facebook"></ion-icon>
+              </a>
+            </li>
+
+            <li>
+              <a href="#" class="social-link">
+                <ion-icon name="logo-instagram"></ion-icon>
+              </a>
+            </li>
+
+            <li>
+              <a href="#" class="social-link">
+                <ion-icon name="logo-twitter"></ion-icon>
+              </a>
+            </li>
+
+          </ul>
+
+        </div>
+
+        <ul class="footer-list">
+
+          <li>
+            <p class="footer-list-title">Our links</p>
+          </li>
+
+          <li>
+            <a href="index.html" class="footer-link">Home</a>
+          </li>
+
+          <li>
+            <a href="about.html" class="footer-link">About Us</a>
+          </li>
+
+          <li>
+            <a href="investment-plans.html" class="footer-link">Services</a>
+          </li>
+
+         
+
+        </ul>
+
+        <ul class="footer-list">
+
+          <li>
+            <p class="footer-list-title">Our Services</p>
+          </li>
+
+          
+
+          <li>
+            <a href="self-managed.html" class="footer-link">Invest on your own</a>
+          </li>
+
+          <li>
+            <a href="wealth.html" class="footer-link">Wealth</a>
+          </li>
+
+          <li>
+            <a href="about.html" class="footer-link">Careers</a>
+          </li>
+        </ul>
+
+        <ul class="footer-list">
+
+          <li>
+            <p class="footer-list-title">Other links</p>
+          </li>
+
+          
+          <li>
+            <a href="privacy.html" class="footer-link">Privacy & Security</a>
+          </li>
+
+          <li>
+            <a href="terms.html" class="footer-link">Terms of Service</a>
+          </li>
+
+          <li>
+            <a href="security-center.html" class="footer-link">Support</a>
+          </li>
+
+        </ul>
+
+        <ul class="footer-list">
+
+          <li>
+            <p class="footer-list-title">Contact Us</p>
+          </li>
+
+          <li class="footer-item">
+
+            
+          </li>
+
+          <li class="footer-item">
+
+            <div class="footer-item-icon">
+              <ion-icon name="mail"></ion-icon>
+            </div>
+
+            <div>
+              <a href="mailto:boongrow6@gmail.com.com" class="footer-item-link">info@boongrowth.com</a>
+              <a href="mailto:boongrow6@gmail.com" class="footer-item-link">help@boongrowth.com</a>
+            </div>
+
+          </li>
+
+          <li class="footer-item">
+
+            <div class="footer-item-icon">
+              <ion-icon name="location"></ion-icon> 
+            </div>
+
+            <address class="footer-item-link">
+              250 Park Ave, New York, NY 10177, United States
+            </address>
+
+          </li>
+
+        </ul>
+
+      </div>
+    </div>
+
+    <div class="footer-bottom">
+      <p class="copyright">
+        &copy; 2024 <a href="#" class="copyright-link" style="text-decoration:none;">BoonGrowth</a>. All Right Reserved
+      </p>
+    </div>
+
+  </footer>
+
+
+
+
+
+  <!-- 
+    - #GO TO TOP
+  -->
+
+  <a href="#top" class="go-top  active" aria-label="Go To Top" data-go-top>
+    <ion-icon name="arrow-up-outline"></ion-icon>
+  </a>
+
+
+
+
+
+  <!-- 
+    - custom js link
+  -->
+  <script src="./assets/js/script.js"></script>
+ <script src="./button.js"></script>
+ <script src="contactsession.js"></script>
+   <script src="firebase.js"></script>
+  <!-- 
+    - ionicon link
+  -->
+  <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+  <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+
+</body>
+
+</html>

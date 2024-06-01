@@ -1,0 +1,664 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>BoonGrowth</title>
+
+  <!-- 
+    - favicon
+  -->
+  <link rel="shortcut icon" href="./favicon.svg" type="image/svg+xml">
+
+  <!-- 
+    - custom css link
+  -->
+  <link rel="stylesheet" href="./assets/css/style.css">
+
+  <!-- 
+    - google font link
+  -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&family=Source+Sans+Pro:wght@600;700&display=swap"
+    rel="stylesheet">
+
+    <style>
+      
+      #success {
+  background-color: #dff0d8;
+  border-color: #d6e9c6;
+  color: #3c763d;
+}
+
+#Alert {
+  background-color: #f2dede;
+  border-color: #ebccd1;
+  color: #a94442;
+}
+.blog-post {
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            margin: 20px auto;
+            padding: 20px;
+            max-width: 600px;
+        }
+
+        #postTitle {
+            font-size: 24px;
+            color: #333;
+            margin-bottom: 10px;
+        }
+
+        #postImage {
+            width: 100%;
+            border-radius: 10px;
+            margin-bottom: 10px;
+        }
+
+        #postContent {
+            color: #666;
+            line-height: 1.6;
+        }
+           #postDate {
+            color: darkgreen;
+            font-size: 14px;
+            margin-top: 5px;
+        }
+          .blog-card {
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            margin: 20px auto;
+            max-width: 600px;
+        }
+
+        .card-banner img {
+            width: 100%;
+            border-top-left-radius: 10px;
+            border-top-right-radius: 10px;
+        }
+
+        .card-tag {
+            display: block;
+            background-color: #007bff;
+            color: #fff;
+            padding: 5px 10px;
+            border-radius: 5px;
+            margin-top: 10px;
+            text-decoration: none;
+            font-size: 14px;
+        }
+
+        .card-title {
+            font-size: 24px;
+            color: #007;
+            margin: 10px 0;
+        }
+        .collapsible-content {
+            display: none;
+        }
+
+        .collapsible-content.active {
+            display: block;
+        }
+    
+        
+        section {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 16px;
+            padding: 16px;
+        }
+        .card {
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            width: 330px;
+            padding: 16px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        .card-heading {
+            color: #1666c4;
+            font-size: 1.5em;
+            margin-bottom: 8px;
+            font-weight: 600;
+        }
+        .card-content {
+            color: black;
+            font-size: 1em;
+            margin-bottom: 16px;
+        }
+        .card-link {
+            color: #1666c4;
+            text-decoration: none;
+            font-weight: ;
+        }
+        .card-link:hover {
+            text-decoration: underline;
+        }
+    
+    </style>
+</head>
+
+<body id="top">
+
+  <!-- 
+    - #HEADER
+  -->
+
+  <header class="header" data-header>
+    <div class="container">
+
+      <div class="overlay" data-overlay></div>
+
+      <a href="index.html">
+        <h1 class="logo">Boon</h1>
+      </a>
+
+      <nav class="navbar" data-navbar>
+
+        <div class="navbar-top">
+          <a href="index.html" class="logo">Boon</a>
+
+          <button class="nav-close-btn" aria-label="Close Menu" data-nav-close-btn>
+            <ion-icon name="close-outline"></ion-icon>
+          </button>
+        </div>
+
+        <ul class="navbar-list">
+
+          <li class="navbar-item">
+            <a href="#home" class="navbar-link" data-navbar-link>Home</a>
+          </li>
+
+          <li class="navbar-item">
+            <a href="about.html" class="navbar-link" data-navbar-link>About</a>
+          </li>
+
+          <li class="navbar-item">
+            <a href="investment-plans.html" class="navbar-link" data-navbar-link>Services</a>
+          </li>
+
+          <li class="navbar-item">
+            <a href="contact-boon.html" class="navbar-link" data-navbar-link>Contact us</a>
+          </li>
+
+          <li class="navbar-item">
+            <a href="create-account.html" class="navbar-link" data-navbar-link>Register An Account</a>
+          </li>
+
+          <li class="navbar-item">
+            <a href="boon-signin.html" class="navbar-link" data-navbar-link>Login</a>
+          </li>
+
+        </ul>
+
+      </nav>
+
+      <a href="boon-signup.html" class="btn">
+        <ion-icon name="chevron-forward-outline" aria-hidden="true"></ion-icon>
+
+        <span>Open an Account</span>
+      </a>
+
+      <button class="nav-open-btn" aria-label="Open Menu" data-nav-open-btn>
+        <ion-icon name="menu-outline"></ion-icon>
+      </button>
+
+    </div>
+  </header>
+
+
+
+
+
+  <main>
+    <article>
+
+      <!-- 
+        - #HERO
+      -->
+
+      <section class="hero" id="home">
+        <div class="container">
+
+          <div class="hero-content">
+
+            <p class="hero-subtitle"></p>
+
+            <h2 class="h2 hero-title">Reaching investment goals strategically</h2>
+
+            <p class="hero-text">
+              You can also implement specific investment ideas automatically with a large selection
+of different investment strategies, for example climate or value.
+                 </p>
+
+                <button class="btn" onclick="redirectTocreate()">Get Started</button>
+
+          </div>
+
+          
+
+        </div>
+      </section>
+            <section class="section features" id="features">
+        <div class="container">
+
+          <h2 class="h2 section-title underline">Reaching investment goals strategically</h2>
+
+          <ul class="features-list">
+
+            <li>
+              <div class="features-card">
+
+                <div class="icon">
+                  <ion-icon name="bulb-outline"></ion-icon>
+                </div>
+
+                <div class="content">
+                  <h3 class="h3 title">Versatile </h3>
+
+                  <p class="text">
+                     for every investor type: From globally diversified to strategies with a specific investment focus.
+                  </p>
+                </div>
+
+              </div>
+            </li>
+            </ul>
+            
+                      <ul class="features-list">
+
+            <li>
+              <div class="features-card">
+
+                <div class="icon">
+                  <ion-icon name="bulb-outline"></ion-icon>
+                </div>
+
+                <div class="content">
+                  <h3 class="h3 title">Flexible </h3>
+
+                  <p class="text">
+                     change your portfolio's strategy at any time or add more portfolios with different strategies.
+                  </p>
+                </div>
+
+              </div>
+            </li>
+                      <ul class="features-list">
+
+            <li>
+              <div class="features-card">
+
+                <div class="icon">
+                  <ion-icon name="bulb-outline"></ion-icon>
+                </div>
+
+                <div class="content">
+                  <h3 class="h3 title">Individual</h3>
+
+                  <p class="text">
+                    investment strategies tailored to your personal situation, goals, values and preferences  with different risk levels.
+                  </p>
+                </div>
+
+              </div>
+            </li>
+            </ul>
+        </div>
+      </section>
+      <section class="section service" id="services">
+        <div class="container">
+
+          <h2 class="h2 section-title underline">
+          <span class="spano"></span></h2>
+
+          <ul class="service-list">
+
+            <li>
+              <div class="service-card">
+
+                <div class="card-icon">
+                  <ion-icon name="telescope-outline"></ion-icon>
+                </div>
+
+                <h3 class="h3 title"><span class="spano">New</span>World Portfolio
+Classic</h3>
+
+                <p class="text">
+                 Invest in the whole world: With an ETF portfolio that includes over 7,800 companies as well as bonds and commodities.
+                </p>
+ <button class="more" onclick="redirectTocreate()">invest now</button>
+
+                
+
+              </div>
+            </li>
+
+            <li>
+              <div class="service-card">
+
+                <div class="card-icon">
+                  <ion-icon name="desktop-outline"></ion-icon>
+                </div>
+
+                <h3 class="h3 title"><span class="spano"> </span>World Portfolio
+ESG</h3>
+
+                <p class="text">
+                  Globally diversified ETF portfolio that takes into account environmental, social and governmental (ESG) criteria.
+                </p>
+                <button class="more" onclick="redirectTocreate()">invest now</button>
+                
+             
+
+              </div>
+            </li>
+              <li>
+              <div class="service-card">
+
+                <div class="card-icon">
+                  <ion-icon name="desktop-outline"></ion-icon>
+                </div>
+
+                <h3 class="h3 title"><span class="spano"> </span>World Portfolio
+ESG + Gold</h3>
+
+                <p class="text">
+                  The World ESG strategy supplemented by physical gold and commodities as a possible protection against inflation.
+                </p>
+                <button class="more" onclick="redirectTocreate()">Invest now</button>
+                
+             
+
+              </div>
+            </li>
+                      </ul>
+  </div>
+      </section>
+        <div class="about-content">
+
+            <h2 class="h2 section-title underline">Strategies meeting specific investment focuses</h2>
+
+<p class="about-text">You can also implement specific investment ideas automatically with a large selection
+of different investment strategies, for example climate or value.</p>
+</section>
+      
+      <section>
+        <div class="card">
+            <div class="card-heading">InterestInvest</div>
+            <div class="card-content">
+                The smart alternative to overnight deposits: Automatically invest in corporate bonds and money market ETFs.
+            </div>
+            <a href="interestinvest.html" class="card-link">Learn more</a>
+        </div>
+
+        <div class="card">
+            <div class="card-heading">Climates</div>
+            <div class="card-content">
+                Investing money globally in line with the goals of the Paris Climate Agreement - now possible with the Climate Strategy.
+            </div>
+            <a href="climate.html" class="card-link">More about climates</a>
+        </div>
+
+        <div class="card">
+            <div class="card-heading">Megatrends</div>
+            <div class="card-content">
+                Invest in long-term future trends and technologies such as artificial intelligence, biotechnology and robotics.
+            </div>
+            <a href="megatrend.html" class="card-link">Find Cryptos / More about Megatrend</a>
+        </div>
+        <div class="card">
+            <div class="card-heading">GDP global</div>
+            <div class="card-content">
+                Global equity portfolio weighted by countries' real economic output (GDP)
+            </div>
+            <a href="gdp.html" class="card-link">More about GDP Global</a>
+        </div>
+
+        <div class="card">
+            <div class="card-heading">Value</div>
+            <div class="card-content">
+                Value
+Invest like star investor Warren Buffett with a focus on fundamentally undervalued stocks.
+            </div>
+            <a href="valueinvest.html" class="card-link"> More about Value</a>
+        </div>
+        </div>
+
+
+    </section>
+      
+      
+  <div class="about-content">
+
+            <h2 class="h2 section-title underline">Investing without the hassle</h2>
+
+<p class="about-text">Providing for the future – worryless? Manage assets without spending time? With Boongrowth Wealth, we do the investing for you. Invest simply, automatically and cost-effectively..</p>
+</section>
+      <section class="section about" id="about">
+        <div class="container">
+
+       
+          <div class="about-content">
+
+        
+
+          
+
+            <ul class="stats-list">
+
+              <li class="stats-card">
+                <p class="h3 stats-title">$1M+</p>
+
+                <p class="stats-text">Clients build their wealth with Boon</p>
+              </li>
+
+  <li class="stats-card">
+                <p class="h3 stats-title">$11+ Billion </p>
+
+                <p class="stats-text"> in Clients Assets</p>
+              </li>
+
+              <li class="stats-card">
+                <p class="h3 stats-title">Security</p>
+
+                <p class="stats-text">Custody of securities with
+a American custodian bank</p>
+              </li>
+
+            </ul>
+
+          </div>
+
+        </div>
+      </section>
+
+
+  <footer class="footer">
+
+    <div class="footer-top section">
+      <div class="container">
+
+        <div class="footer-brand">
+
+          <a href="index.html" class="logo">Boon</a>
+
+          <p class="text">
+            Let's collaborate to identify your current priorities and work towards building a brighter future for you and your family.
+          </p>
+
+          <ul class="social-list">
+
+            <li>
+              <a href="https://www.facebook.com/profile.php?id=61559870982135" class="social-link">
+                <ion-icon name="logo-facebook"></ion-icon>
+              </a>
+            </li>
+
+            <li>
+              <a href="#" class="social-link">
+                <ion-icon name="logo-instagram"></ion-icon>
+              </a>
+            </li>
+
+            <li>
+              <a href="#" class="social-link">
+                <ion-icon name="logo-twitter"></ion-icon>
+              </a>
+            </li>
+
+          </ul>
+
+        </div>
+
+        <ul class="footer-list">
+
+          <li>
+            <p class="footer-list-title">Our links</p>
+          </li>
+
+          <li>
+            <a href="index.html" class="footer-link">Home</a>
+          </li>
+
+          <li>
+            <a href="about.html" class="footer-link">About Us</a>
+          </li>
+
+          <li>
+            <a href="investment-plans.html" class="footer-link">Services</a>
+          </li>
+
+         
+
+        </ul>
+
+        <ul class="footer-list">
+
+          <li>
+            <p class="footer-list-title">Our Services</p>
+          </li>
+
+          
+
+          <li>
+            <a href="self-managed.html" class="footer-link">Invest on your own</a>
+          </li>
+
+          <li>
+            <a href="wealth.html" class="footer-link">Wealth</a>
+          </li>
+
+          <li>
+            <a href="about.html" class="footer-link">Careers</a>
+          </li>
+        </ul>
+
+        <ul class="footer-list">
+
+          <li>
+            <p class="footer-list-title">Other links</p>
+          </li>
+
+          
+          <li>
+            <a href="privacy.html" class="footer-link">Privacy & Security</a>
+          </li>
+
+          <li>
+            <a href="terms.html" class="footer-link">Terms of Service</a>
+          </li>
+
+          <li>
+            <a href="security-center.html" class="footer-link">Support</a>
+          </li>
+
+        </ul>
+
+        <ul class="footer-list">
+
+          <li>
+            <p class="footer-list-title">Contact Us</p>
+          </li>
+
+          <li class="footer-item">
+
+            
+          </li>
+
+          <li class="footer-item">
+
+            <div class="footer-item-icon">
+              <ion-icon name="mail"></ion-icon>
+            </div>
+
+            <div>
+              <a href="mailto:boongrow6@gmail.com.com" class="footer-item-link">info@boongrowth.com</a>
+              <a href="mailto:boongrow6@gmail.com" class="footer-item-link">help@boongrowth.com</a>
+            </div>
+
+          </li>
+
+          <li class="footer-item">
+
+            <div class="footer-item-icon">
+              <ion-icon name="location"></ion-icon> 
+            </div>
+
+            <address class="footer-item-link">
+              250 Park Ave, New York, NY 10177, United States
+            </address>
+
+          </li>
+
+        </ul>
+
+      </div>
+    </div>
+
+    <div class="footer-bottom">
+      <p class="copyright">
+        &copy; 2024 <a href="#" class="copyright-link" style="text-decoration:none;">BoonGrowth</a>. All Right Reserved
+      </p>
+    </div>
+
+  </footer>
+
+
+
+
+
+  <!-- 
+    - #GO TO TOP
+  -->
+
+  <a href="#top" class="go-top  active" aria-label="Go To Top" data-go-top>
+    <ion-icon name="arrow-up-outline"></ion-icon>
+  </a>
+
+
+
+
+
+  <!-- 
+    - custom js link
+  -->
+  <script src="./assets/js/script.js"></script>
+ <script src="./button.js"></script>
+ <script src="contactsession.js"></script>
+   <script src="firebase.js"></script>
+  <!-- 
+    - ionicon link
+  -->
+  <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+  <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+
+</body>
+
+</html>
