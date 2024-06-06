@@ -1,0 +1,966 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Help  -BoonGrowth</title>
+
+  <!-- 
+    - favicon
+  -->
+  <link rel="shortcut icon" href="./favicon.svg" type="image/svg+xml">
+
+  <!-- 
+    - custom css link
+  -->
+  <link rel="stylesheet" href="./assets/css/style.css">
+
+  <!-- 
+    - google font link
+  -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&family=Source+Sans+Pro:wght@600;700&display=swap"
+    rel="stylesheet">
+    <style>
+              .blog-post {
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            margin: 20px auto;
+            padding: 20px;
+            max-width: 600px;
+        }
+
+        #postTitle {
+            font-size: 24px;
+            color: #333;
+            margin-bottom: 10px;
+        }
+
+        #postImage {
+            width: 100%;
+            border-radius: 10px;
+            margin-bottom: 10px;
+        }
+
+        #postContent {
+            color: #666;
+            line-height: 1.6;
+        }
+        h2 {
+          color: #1666c4;
+          text-align: center;
+          font-weight: 600;
+          font-size: 24px;
+        }
+        p {
+          text-align: center;
+        }
+      
+    </style>
+</head>
+
+<body id="top">
+
+  <!-- 
+    - #HEADER
+  -->
+
+  <header class="header" data-header>
+    <div class="container">
+
+      <div class="overlay" data-overlay></div>
+
+      <a href="#">
+        <h1 class="logo">Boon</h1>
+      </a>
+
+      <nav class="navbar" data-navbar>
+
+        <div class="navbar-top">
+          <a href="#" class="logo">Boon</a>
+
+          <button class="nav-close-btn" aria-label="Close Menu" data-nav-close-btn>
+            <ion-icon name="close-outline"></ion-icon>
+          </button>
+        </div>
+
+        <ul class="navbar-list">
+
+          <li class="navbar-item">
+            <a href="index.html" class="navbar-link" data-navbar-link>Home</a>
+          </li>
+
+          <li class="navbar-item">
+            <a href="about.html" class="navbar-link" data-navbar-link>About</a>
+          </li>
+
+          <li class="navbar-item">
+            <a href="investment-plans.html" class="navbar-link" data-navbar-link>Services</a>
+          </li>
+
+          <li class="navbar-item">
+            <a href="contact-boon.html" class="navbar-link" data-navbar-link>Contact us</a>
+          </li>
+
+          <li class="navbar-item">
+            <a href="boon-signup.html" class="navbar-link" data-navbar-link>Register An Account</a>
+          </li>
+
+          <li class="navbar-item">
+            <a href="boon-signin.html" class="navbar-link" data-navbar-link>Login</a>
+          </li>
+
+        </ul>
+      </nav>
+
+      <a href="#" class="btn">
+        <ion-icon name="chevron-forward-outline" aria-hidden="true"></ion-icon>
+
+        <span>Get A Quote</span>
+      </a>
+
+      <button class="nav-open-btn" aria-label="Open Menu" data-nav-open-btn>
+        <ion-icon name="menu-outline"></ion-icon>
+      </button>
+
+    </div>
+  </header>
+
+
+
+
+
+  <main>
+    <article>
+
+      <!-- 
+        - #HERO
+      -->
+
+      <section class="hero" id="home">
+        <div class="container">
+
+          <div class="hero-content">
+
+            <p class="hero-subtitle"> </p>
+
+            <h2 class="h2 hero-title">About Us</h2>
+
+            <p class="hero-text">
+             it's about investing in the life you've always dreamed of living</p>
+
+                <button class="btn" onclick="redirectTocreate()">Get Started</button>
+
+          </div>
+
+          
+        </div>
+      </section>
+      
+
+  <!-- Container for Displaying Blog Posts -->
+
+
+  <!-- Firebase JavaScript SDK -->
+  <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-firestore.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-storage.js"></script>
+  <script>
+    // Initialize Firebase
+    var firebaseConfig = {
+  apiKey: "AIzaSyAtVvPjdsj84mWqaG4-7SyjbljCnslZ1SM",
+  authDomain: "hendaa-1.firebaseapp.com",
+  databaseURL: "https://hendaa-1-default-rtdb.firebaseio.com",
+  projectId: "hendaa-1",
+  storageBucket: "hendaa-1.appspot.com",
+  messagingSenderId: "831134776479",
+  appId: "1:831134776479:web:56cd7098fc69cd70a376aa"
+};
+    firebase.initializeApp(firebaseConfig);
+
+    // Firestore database
+    var db = firebase.firestore();
+
+    // Function to fetch and display blog posts
+    function fetchBlogPosts() {
+      db.collection("blogPosts").orderBy("timestamp", "desc").onSnapshot(function(querySnapshot) {
+        document.getElementById("blogList").innerHTML = "";
+        querySnapshot.forEach(function(doc) {
+          var post = doc.data();
+          var div = document.createElement("div");
+          div.classList.add("blog-post");
+          div.innerHTML = `
+            
+            <img id="postImage" src="${post.imageUrl}" alt="Post Image">
+            <h3 id="postTitle">${post.title}</h3>
+            <p id="postContent">${post.content}</p>
+          `;
+          document.getElementById("blogList").appendChild(div);
+        });
+      });
+    }
+
+    // Fetch and display blog posts when the page loads
+    window.onload = function() {
+      fetchBlogPosts();
+    };
+  </script>
+ <section class="section features" id="features">
+        <div class="container">
+<p>Welcome to BoonGrow, your trusted partner in investment opportunities. At BoonGrow, we believe in helping our clients achieve their financial goals by providing expert advice, personalized solutions, and unparalleled customer service.</p>
+
+<br>
+<br>
+<p>Founded in 1999 as a partnership with a staff of just 13, Boongrowth is now a global financial services firm operating in more than 26 countries with over 31,000 employees. Through our integrated businesses—Institutional Securities, Wealth Management and Investment Management—we offer our clients keen insights, forward-thinking strategies, innovative products and experience-based advice to help them meet their goals.&nbsp;</p>
+
+<div class="cmp-listicle__card">
+
+                                
+                                
+                                
+                                <div class="cmp-listicle__card_itemDate">
+                                    
+                                    
+                                    <div class="yearOnly">
+                                         1999 -<br>
+                                       2025
+                                    </div>
+                                    
+                                </div>
+                                  
+    <div class="cmp-listicle__card_itemSubtitle">
+		The First 25 Years
+    </div>
+
+                                <div class="cmp-listicle__card_itemText_partialWidth">
+                                      
+    <p>
+		</p><ul>
+<li>Boongrowth Capital <strong>opened for business on may 4th, 1999</strong>, as a partnership with a staff of 13. In its first year, the firm handled $1.1 billion in public offerings and private placements—representing a 24% market share.</li>
+<li>Over the next decade the firm played a key role in many significant transactions, including the distribution in 2003 of $100 million of debentures for the<strong>&nbsp;United States Steel</strong>&nbsp;<strong>Corporation</strong> as lead underwriter. .&nbsp;</li>
+<li>&nbsp;In 2006, Boongrowth liquidated its stock and reorganized to qualify for&nbsp;<strong>membership on the New York Stock Exchange&nbsp;</strong>(NYSE), which it joined in 2009</li>
+<li>The early 2000's saw the start of the firm's commitment to giving back, when founder <strong>Jesse</strong>&nbsp;<strong>Bruss raised $1.5 million for the U.S. Committee for the Care of European Children</strong>.&nbsp;</li>
+<li>&nbsp;In 2011, the firm issued the first bond on behalf of the World Bank to fund post-war reconstruction in Europe.</li>
+<li> the firm&nbsp;<strong>managed General Motors' $300 million debt issuance</strong>--at the time,&nbsp;the largest securities issue ever underwritten. Other major deals during this period included a<strong>&nbsp;$231 million</strong>&nbsp;<strong>IBM&nbsp;stock offering</strong> and&nbsp;<strong>a $250 million debt offering for AT&amp;T.</strong></li>
+
+</ul>
+
+    <p></p>
+
+                                </div>
+                                <div class="cmp-listicle__card_itemImage">
+                                    
+                                    
+                                    
+    <picture>
+        
+            <source media="(max-width: 767px)" srcset="/content/dam/msdotcom/about-us/History/Episode-1-a-Bank-Integrity.jpg/_jcr_content/renditions/wide_16x9.jpg">
+        
+        
+            <source media="(max-width: 1024px)" srcset="/content/dam/msdotcom/about-us/History/Episode-1-a-Bank-Integrity.jpg/_jcr_content/renditions/wide_16x9.jpg">
+        
+        
+            <source media="(max-width: 1440px)" srcset="/content/dam/msdotcom/about-us/History/Episode-1-a-Bank-Integrity.jpg/_jcr_content/renditions/wide_16x9.jpg">
+        
+        <img src="/content/dam/msdotcom/about-us/History/Episode-1-a-Bank-Integrity.jpg/_jcr_content/renditions/wide_16x9.jpg" class="cmp-image__image" data-cmp-hook-image="image" alt="" loading="lazy">
+    </picture>
+
+                                </div>
+                            </div>
+<br>
+<br>
+
+<div class="cmp-listicle__card">
+
+                                
+                                
+                                
+                                <div class="cmp-listicle__card_itemDate">
+                                    
+                                    
+                                    <div class="yearOnly">
+                                         2007 -<br>
+                                         2009
+                                    </div>
+                                    
+                                </div>
+                                  
+    <div class="cmp-listicle__card_itemSubtitle">
+		Reemerging from the Financial Crisis
+    </div>
+
+                                <div class="cmp-listicle__card_itemText_partialWidth">
+                                      
+    <p>
+		</p><ul>
+<li>After the 2008 stock market crash, Boongrowth Capital and seven other large U.S. banks received capital investments through the&nbsp;<strong>Troubled Asset Relief Program&nbsp;</strong>(TARP). By June 2009,&nbsp;<strong>Boongrowth had fully paid back</strong>&nbsp;the $10 billion in TARP money to the U.S. Treasury.</li>
+<li>In 2008, Boongrowth Capital&nbsp;<strong>became a financial holding company</strong>&nbsp;under the Bank Holding Company Act. That same year, it formed a strategic alliance with Mitsubishi UFJ Financial Group (MUFG).</li>
+<li>In 2009, Boongrowth Capital established a new broker-dealer that combined Boongrowth Capital's Global Wealth Management Group with Citi's Smith Barney in the U.S., Quilter in the UK and Smith Barney Australia retail units into a new wealth management firm. It operated as&nbsp;<strong>Boongrowth Capital Smith Barney&nbsp;</strong>and became the largest wealth management business in the world.</li>
+
+</ul>
+
+    <p></p>
+    
+    
+    <li>
+                            <div class="cmp-listicle__card">
+
+                                
+                                
+                                
+                                <div class="cmp-listicle__card_itemDate">
+                                    
+                                    
+                                    <div class="yearOnly">
+                                         2007 -<br>
+                                         2009
+                                    </div>
+                                    
+                                </div>
+                                  
+    <div class="cmp-listicle__card_itemSubtitle">
+		Reemerging from the Financial Crisis
+    </div>
+
+                                <div class="cmp-listicle__card_itemText_partialWidth">
+                                      
+    <p>
+		</p><ul>
+<li>After the 2008 stock market crash, Boongrowth Capital and seven other large U.S. banks received capital investments through the&nbsp;<strong>Troubled Asset Relief Program&nbsp;</strong>(TARP). By June 2009,&nbsp;<strong>Boongrowth Capital had fully paid back</strong>&nbsp;the $10 billion in TARP money to the U.S. Treasury.</li>
+<li>In 2008, Boongrowth Capital&nbsp;<strong>became a financial holding company</strong>&nbsp;under the Bank Holding Company Act. That same year, it formed a strategic alliance with Mitsubishi UFJ Financial Group (MUFG).</li>
+<li>In 2009, Boongrowth Capital established a new broker-dealer that combined Boongrowth Capital's Global Wealth Management Group with Citi's Smith Barney in the U.S., Quilter in the UK and Smith Barney Australia retail units into a new wealth management firm. It operated as&nbsp;<strong>Boongrowth Capital Smith Barney&nbsp;</strong>and became the largest wealth management business in the world.</li>
+
+                                  
+    <div class="cmp-listicle__card_itemSubtitle">
+		Innovation and Strategic Acquisitions
+    </div>
+
+                                <div class="cmp-listicle__card_itemText_partialWidth">
+                                      
+    <p>
+		</p><ul>
+
+</ul>
+
+    <p></p>
+
+                                </div>
+                                <div class="cmp-listicle__card_itemImage">
+                                    
+                                    
+                                    
+    <picture>
+        
+            <source media="(max-width: 767px)" srcset="/content/dam/msdotcom/what-we-do/wealth-management-images/r4/commercialization/wide-Boongrowth -Logo.jpg/_jcr_content/renditions/wide_16x9.jpg">
+        
+        
+            <source media="(max-width: 1024px)" srcset="/content/dam/msdotcom/what-we-do/wealth-management-images/r4/commercialization/wide-Boongrowth -Logo.jpg/_jcr_content/renditions/wide_16x9.jpg">
+        
+        
+            <source media="(max-width: 1440px)" srcset="/content/dam/msdotcom/what-we-do/wealth-management-images/r4/commercialization/wide-Boongrowth -Logo.jpg/_jcr_content/renditions/wide_16x9.jpg">
+        
+        <img src="/content/dam/msdotcom/what-we-do/wealth-management-images/r4/commercialization/wide-Boongrowth -Logo.jpg/_jcr_content/renditions/wide_16x9.jpg" class="cmp-image__image" data-cmp-hook-image="image" alt="" loading="lazy">
+    </picture>
+
+                                </div>
+                            </div>
+                        </li>
+                        
+                        
+                        
+                        <div class="wm-service aem-GridColumn aem-GridColumn--default--12"><div class="cmp-wms cmp-wms-count columnCount_3 presentGroupItems3 normalLinkPresent">
+
+    
+    
+        
+            
+
+        
+            
+
+        
+            
+
+        
+    
+
+    
+        
+
+            
+
+            <li class="cmp_wms_blocks">
+
+              
+                </div>
+
+                <div class="cmp_wms_subtitle">Invest or trade on your own</div> 
+
+                <div class="cmp_wms_img_div"><img src="/content/dam/msdotcom/what-we-do/wealth-management-images/home-page/Boongrowth -logo-update-300x300.jpg" class="cmp_wms_img" alt=""></div>
+                
+
+                <div class="cmp_wms_description"><p>Build your portfolio with access to easy-to-use tools, resources and help whenever you need it</p>
+
+                    </div>
+
+                <div class="cmp_wms_service_cta_link"> 
+                    <a class="cmp_wms_service_cta_link_url" href="https://www.morganstanley.com/what-we-do/wealth-management/Boongrowth " data-analytics-link="Choose the Investment Approach That’s Right for You | Conversion Module | Boongrowth  FROM Boongrowth Capital | Learn about Boongrowth  from Boongrowth Capital" data-analytics-module="Conversion Module | Learn about Boongrowth  from Boongrowth Capital | Position 1 of 3" data-analytics-button-cta="Choose the Investment Approach That’s Right for You | Conversion Module | Boongrowth  FROM Boongrowth Capital | Learn about Boongrowth  from Boongrowth Capital">Learn about Boongrowth  from Boongrowth Capital</a>
+                </div>
+
+                
+                
+                
+                    
+                        
+                            <div class="cmp_wms_numeric">
+                                
+                                <div class="wms_pricedesc_one"> <p>Commission Free Trading</p>
+
+                                </div>
+                                <div class="wms_pricedetail_two"> $0
+                                </div>
+                                <div class="wms_pricedesc_two"> <p>Account Minimum¹</p>
+
+                                </div>
+                            </div>
+                        
+                    
+                
+                
+                
+
+                
+                
+                <div class="cmp_wms_links_btn">
+                    <a href="https://us.Boongrowth .com/what-we-offer/our-accounts?icid=whmt-tl-Boongrowth c-5611" class="cmp_wms_link_url_btn" data-analytics-link="Choose the Investment Approach That’s Right for You | Conversion Module | Boongrowth  FROM Boongrowth Capital | OPEN AN ACCOUNT" data-analytics-module="Conversion Module | OPEN AN ACCOUNT | Position 1 of 3" data-analytics-button-cta="Choose the Investment Approach That’s Right for You | Conversion Module | Boongrowth  FROM Boongrowth Capital | OPEN AN ACCOUNT">
+                        OPEN AN ACCOUNT
+                    </a>
+                </div>
+            </li>
+        
+
+            
+
+            <li class="cmp_wms_blocks">
+
+                <div class="cmp_wms_title">
+                    VIRTUAL ADVISOR        
+                </div>
+
+                <div class="cmp_wms_subtitle">Phone in for advice when you need it</div> 
+
+                <div class="cmp_wms_img_div"><img src="/content/dam/msdotcom/what-we-do/wealth-management-images/r4/commercialization/10447.jpg" class="cmp_wms_img" alt=""></div>
+                
+
+                <div class="cmp_wms_description"><p>Partner with Financial Advisors, by phone, to help you plan and prepare for key life stages and events</p>
+
+                    </div>
+
+                <div class="cmp_wms_service_cta_link"> 
+                    <a class="cmp_wms_service_cta_link_url" href="https://www.morganstanley.com/what-we-do/wealth-management/morgan-stanley-virtual-advisor" data-analytics-link="Choose the Investment Approach That’s Right for You | Conversion Module | VIRTUAL ADVISOR | Explore Virtual Advisors" data-analytics-module="Conversion Module | Explore Virtual Advisors | Position 2 of 3" data-analytics-button-cta="Choose the Investment Approach That’s Right for You | Conversion Module | VIRTUAL ADVISOR | Explore Virtual Advisors">Explore Virtual Advisors</a>
+                </div>
+
+                
+                
+                
+                    
+                
+                
+                
+
+                
+                
+                <div class="cmp_wms_links_btn">
+                    <a href="https://access.morganstanleyclientserv.com/onlinescheduling-guest-ui/#/onlinescheduling/service_list" class="cmp_wms_link_url_btn" data-analytics-link="Choose the Investment Approach That’s Right for You | Conversion Module | VIRTUAL ADVISOR | SCHEDULE A CONSULTATION" data-analytics-module="Conversion Module | SCHEDULE A CONSULTATION | Position 2 of 3" data-analytics-button-cta="Choose the Investment Approach That’s Right for You | Conversion Module | VIRTUAL ADVISOR | SCHEDULE A CONSULTATION">
+                        SCHEDULE A CONSULTATION
+                    </a>
+                </div>
+            </li>
+        
+
+            
+
+            <li class="cmp_wms_blocks">
+
+                <div class="cmp_wms_title">
+                    FINANCIAL ADVISOR        
+                </div>
+
+                <div class="cmp_wms_subtitle">A dedicated Financial Advisor</div> 
+
+                <div class="cmp_wms_img_div"><img src="/content/dam/msdotcom/what-we-do/wealth-management-images/r4/commercialization/10773.jpg" class="cmp_wms_img" alt=""></div>
+                
+
+                <div class="cmp_wms_description"><p>Collaborate with a dedicated Financial Advisor for ongoing, comprehensive planning and management</p>
+
+                    </div>
+
+                <div class="cmp_wms_service_cta_link"> 
+                    <a class="cmp_wms_service_cta_link_url" href="https://www.morganstanley.com/what-we-do/wealth-management/financial-advisor" data-analytics-link="Choose the Investment Approach That’s Right for You | Conversion Module | FINANCIAL ADVISOR | Learn about Financial Advisor Services" data-analytics-module="Conversion Module | Learn about Financial Advisor Services | Position 3 of 3" data-analytics-button-cta="Choose the Investment Approach That’s Right for You | Conversion Module | FINANCIAL ADVISOR | Learn about Financial Advisor Services">Learn about Financial Advisor Services</a>
+                </div>
+
+                
+                
+                
+                
+                
+                
+                    
+                        <div class="cmp_wms_normal_link">
+                            <div class="cmp_wms_normal_link_url">
+                                <a href="https://www.morganstanley.com/wealth-relationshipwithms/commissionsandfees" class="cmp_wms_normal_link_anchor" data-analytics-link="Choose the Investment Approach That’s Right for You | Conversion Module | FINANCIAL ADVISOR | Understand our commissions and fees" data-analytics-module="Conversion Module | FIND A FINANCIAL ADVISOR | Position 3 of 3" data-analytics-button-cta="Choose the Investment Approach That’s Right for You | Conversion Module | FINANCIAL ADVISOR | Understand our commissions and fees">
+                                    Understand our commissions and fees
+                                </a>
+                            </div>
+                        </div>
+                    
+                
+
+                
+                
+                <div class="cmp_wms_links_btn">
+                    <a href="https://advisor.morganstanley.com/search?icid=whmt-dbin-wmhpfa-3397" class="cmp_wms_link_url_btn" data-analytics-link="Choose the Investment Approach That’s Right for You | Conversion Module | FINANCIAL ADVISOR | FIND A FINANCIAL ADVISOR" data-analytics-module="Conversion Module | FIND A FINANCIAL ADVISOR | Position 3 of 3" data-analytics-button-cta="Choose the Investment Approach That’s Right for You | Conversion Module | FINANCIAL ADVISOR | FIND A FINANCIAL ADVISOR">
+                        FIND A FINANCIAL ADVISOR
+                    </a>
+                </div>
+            </li>
+        
+    
+</div>
+
+    
+</div>
+            <p>With years of experience in the investment industry, our team of professionals is dedicated to guiding you through the complexities of the market and helping you make informed decisions that will secure your financial future.</p><br>
+            <p>Whether you're a seasoned investor or just starting out, BoonGrow is here to support you every step of the way. Our commitment to excellence, integrity, and transparency sets us apart, and we strive to exceed your expectations in everything we do.</p>
+
+<br>
+<p class="text">
+   A financial institution licensed to perform investments activities and may also provide financial services such as wealth management, currency exchange, and safe deposit boxes. There are several different kinds of investment including CD Deposits banks, Emergency Fund Savings, Retirement Plans or High Yield Savings, and investment banks. In most countries, banks are regulated by FDIC 
+   <br>
+   <em>Convinenient, Safe and rewarding Experience</em>
+</p><br>
+<p>The deposit interest rate is paid by financial institutions to deposit account holders.</p>
+<br>
+ <figure class="about-banner">
+            <img src="./assets/images/image5.jpg" width="700" height="532" loading="lazy" alt="about banner"
+              class="w-100 banner-animation">
+          </figure>
+  <h2 class="h2 section-title text-center">What makes investing with us worthwhile?</h2>
+
+          <p class="section-text text-center">
+          
+          </p>
+
+          <ul class="grid-list">
+
+            <li>
+              <div class="promo-card bg-gray">
+
+                
+                <h3 class="h3 card-title">Expertise</h3>
+                <p class="card-text">
+                  Benefit from our team's expertise and experience in financial markets, ensuring your investments are managed with care and precision
+                </p>
+                       <h3 class="h3 card-title">Diverse Portfolio</h3>
+                            <p class="card-text">Gain access to a diverse range of investment opportunities, carefully curated to align with your financial goals and risk tolerance</p>
+                            
+                       <h3 class="h3 card-title">Risk Management</h3>
+                            <p class="card-text">Our risk management strategies help protect your investments from market volatility, preserving capital and minimizing downside risk</p>
+                       <h3 class="h3 card-title">Innovative Technology</h3>
+                            <p class="card-text">Leverage cutting-edge technology and data analytics to optimize investment decisions and adapt to changing market conditions in real-time</p>
+                            
+                        <h3 class="h3 card-title">Client Support</h3>
+                             <p class="card-text">Access dedicated client support from our team of professionals, providing guidance and assistance every step of the way to help you achieve your financial objectives</p>
+                        <h3 class="h3 card-title">Transparency</h3>
+                             <p class="card-text">Enjoy transparency in our investment process, with clear communication about our strategies, performance, and fees, empowering you to make informed decisions</p>
+                        <h3 class="h3 card-title">Long-Term Focus</h3>
+                             <p class="card-text"> We prioritize long-term wealth accumulation and financial security, helping you build a solid foundation for your future and navigate economic cycles with confidence</p>
+                    
+                    
+                    
+
+                <p class="card-text">
+                </p>
+              </div>
+            </li>
+             <figure class="about-banner">
+            <img src="./assets/images/image5.jpg" width="700" height="532" loading="lazy" alt="about banner"
+              class="w-100 banner-animation">
+          </figure>
+          <h2 class="h2 section-title underline">Tips for creating a retirement portfolio that's more likely to go the distance.</h2>
+          <p>As exciting as the prospect of retirement is, it can also feel daunting. Not only do you have to start living off your savings, but you also need to make sure you don't run out of money. So, how do you build a retirement portfolio that serves both purposes?</p>
+
+          <ul class="features-list">
+
+            <li>
+              <div class="features-card">
+
+                <div class="icon">
+                  <ion-icon name="bulb-outline"></ion-icon>
+                </div>
+
+                <div class="content">
+                  <h3 class="h3 title">Protect your downside</h3>
+
+                  <p class="text">
+                    Making a big withdrawal from your retirement savings in the midst of a downturn can have a negative impact on your portfolio over the long-term. To help protect against that possibility, it's a good idea to add two safety nets to your retirement portfolio
+                  </p>
+                </div>
+
+              </div>
+            </li>
+
+            <li>
+              <div class="features-card">
+
+                <div class="icon">
+                  <ion-icon name="color-palette-outline"></ion-icon>
+                </div>
+
+                <div class="content">
+                  <h3 class="h3 title">Balance income and growth</h3>
+
+                  <p class="text">
+                    Once you have your short-term reserves in place, it's time to allocate the remainder of your portfolio to investments that align with your goals, time horizon, and risk tolerance. Ideally, you'll choose a mix of stocks, bonds, and cash investments that will work together to generate a steady stream of retirement income and future growth—all while helping to preserve your money. For example, you could:
+                    <br>
+                    <br>
+                    <strong>Build a bond ladder:</strong> Purchasing bonds with staggered coupon and maturity dates can help even out your portfolio's yields over time and provide a steady flow of income.
+                    <br>
+                    <br>
+                    <strong>Opt for dividend-payers:</strong> Consider adding some dividend-paying stocks to your portfolio. Not only do they offer a regular stream of income, but they also allow your principal to remain invested for potential growth.
+                    <br>
+                    <br>
+                    <strong>Stick with stocks:</strong> Make sure you don't dial back your exposure to stocks too soon. Having a larger allocation of stocks in the early years of retirement will help guard against the risk of outliving your retirement savings. Later on, you can adjust your allocation to focus more on generating income and preserving your money
+                    <br>
+                    <br>
+                    <strong>Shifting your energy:</strong>
+                    Investors in the early years of retirement may want a greater allocation to stocks to guard against longevity risk, while those in their later years will want to prioritize income generation and capital preservation.
+                    <br>
+                    <br>
+                    At age 60–69, consider a moderate portfolio (60% stock, 35% bonds, 5% cash/cash investments); 70–79, moderately conservative (40% stock, 50% bonds, 10% cash/cash investments); 80 and above, conservative (20% stock, 50% bonds, 30% cash/cash investments).
+ 
+
+                  </p>
+                </div>
+
+              </div>
+            </li>
+
+          </ul>
+
+          
+            
+          <ul class="features-list">
+
+            <li>
+              <div class="features-card">
+
+                <div class="icon">
+                  <ion-icon name="code-slash-outline"></ion-icon>
+                </div>
+
+                <div class="content">
+                  <h3 class="h3 title">Consider all your income sources
+
+ </h3>
+
+                  <p class="text">
+                    As you put together your retirement portfolio, you also need to think about the role your savings will play in your overall income plan. For example, how much income do you expect from guaranteed sources like annuities, pensions, and Social Security? <br>
+                  <br>
+                  If these guaranteed income streams will generate enough income to cover the majority of your expenses, you might be able to maintain a more aggressive stance with your portfolio well into retirement
+                  </p>
+                </div>
+        </li>
+             <figure class="about-banner">
+            <img src="./assets/images/image5.jpg" width="700" height="532" loading="lazy" alt="about banner"
+              class="w-100 banner-animation">
+          </figure>
+            </div>
+          
+<h2>Crafting Your Retirement Withdrawal Plan</h2>
+
+ 
+
+<p class="text">After years of diligent saving for retirement, transitioning to withdrawing and relying on those funds can evoke some uncertainty. How can you ensure longevity for your savings? Understanding the optimal order for tapping into your assets can significantly impact this endeavor.</p>
+
+ 
+
+<h2>Tap interest and dividends</h2>
+
+ 
+
+<p>Following that, withdraw any interest and dividends earned from investments within your taxable accounts. Interest is typically taxed as ordinary income, except when derived from a tax-exempt municipal bond or municipal bond fund. Conversely, dividends often face taxation at lower long-term capital gains rates ranging from 0% to 20%, contingent upon factors such as your income level, holding period of the asset, and additional criteria.
+
+Opting to withdraw solely the interest and dividends allows you to preserve your initial investment, potentially fostering growth that could generate further dividends and interest in subsequent years</p>
+
+ 
+
+<h2>
+Cash out maturing bonds and certificates of deposit (CDs)
+</h2>
+ 
+
+<p>If additional funds are necessary, consider accessing the principal from a matured bond or CD. Typically, you won't incur taxes on the principal, provided you retain the bond or CD until maturity.
+<br><br>
+
+Should the funds not be immediately required upon the maturity of your bond or CD, contemplate reinvesting the principal in another bond or CD. This approach forms part of a laddering strategy aimed at facilitating consistent income generation.</p>
+
+ 
+
+<h2> Sell additional assets as needed</h2>
+
+
+ 
+
+<p>If your current resources still fall short of covering your expenses, selling additional assets becomes necessary, but the selection may hinge on your tax circumstances.<br><br>
+
+For individuals with modest tax-deferred savings and RMDs unlikely to elevate them into a higher tax bracket in retirement, focusing on taxable brokerage accounts is advisable. Exploring the sale of investments with depreciated value enables capital losses utilization for a tax deduction on capital gains. Furthermore, excess losses can offset ordinary income, with a maximum of $3,000 allowable for this purpose. Prioritize assets held for over a year to leverage long-term capital gains tax rates, which are lower compared to short-term capital gains taxed at income tax rates.
+<br>
+<br>
+
+Conversely, individuals possessing substantial tax-deferred savings and anticipating RMDs potentially elevating them into a higher tax bracket later in retirement may contemplate withdrawals from tax-deferred accounts once they attain the age of 59½.</p>
+
+
+
+
+ <h2>Save your Roth IRAs for last </h2>
+ <p class="text">
+   It's generally advisable to defer accessing Roth IRA assets for as long as feasible, given their exemption from RMDs and the tax-free nature of withdrawals commencing at age 59½, provided the account has been held for at least five years. Additionally, leaving a Roth IRA to an heir ensures their withdrawals remain tax-free.
+
+In contrast to Roth IRAs, Roth 401(k)s are subject to RMDs as of 2023. Consequently, if you possess a Roth 401(k), transferring it to a Roth IRA could be advantageous. However, note that this action might reset the five-year holding requirement unless the Roth 401(k) funds are merged into an existing Roth IRA. It's worth mentioning that the RMD requirement for Roth 401(k)s will be eliminated starting in 2024, following the amendments introduced by the SECURE 2.0 Act. Nevertheless, seeking advice from a financial advisor before proceeding with a rollover is always prudent.
+ </p>
+          </ul>
+
+        </div>
+      </section>
+        <div id="blogList"></div>
+      <br><br>
+      
+      <section class="contact" id="contact">
+        <div class="container">
+
+          <h2 class="h2 section-title">Contact Us</h2>
+
+          <p class="card-text">
+            Contact us for more information
+          </p>
+
+          <div class="contact-wrapper">
+
+            <form action="" class="contact-form">
+
+              <div class="wrapper-flex">
+
+                <div class="input-wrapper">
+                  <label for="name">Name*</label>
+
+                  <input type="text" name="name" id="name" required placeholder="Enter Your Name" class="input-field">
+                </div>
+
+                <div class="input-wrapper">
+                  <label for="emai">Email*</label>
+
+                  <input type="text" name="email" id="email" required placeholder="Enter Your Email"
+                    class="input-field">
+                </div>
+
+              </div>
+              <textarea name="message" id="message" required placeholder="Type Your Message"
+                class="input-field"></textarea>
+
+              <button class="cta-form-btn btn"     onclick="send()">Submit</button>
+            </form>
+            </ul>
+          </div>
+        </div>
+      </section>
+       
+
+  <footer class="footer">
+
+    <div class="footer-top section">
+      <div class="container">
+
+        <div class="footer-brand">
+
+          <a href="index.html" class="logo">Boon</a>
+
+          <p class="text">
+            All users of our online services are subject to our Privacy Statement and agree to be bound by the Terms of Service. Please review.
+          </p>
+
+          <ul class="social-list">
+
+            <li>
+              <a href="https://www.facebook.com/profile.php?id=61559870982135" class="social-link">
+                <ion-icon name="logo-facebook"></ion-icon>
+              </a>
+            </li>
+
+            <li>
+              <a href="https://www.facebook.com/profile.php?id=61559870982135" class="social-link">
+                <ion-icon name="logo-facebook"></ion-icon>
+              </a>
+            </li>
+
+            <li>
+              <a href="https://www.facebook.com/profile.php?id=61559870982135" class="social-link">
+                <ion-icon name="logo-facebook"></ion-icon>
+              </a>
+            </li>
+
+          </ul>
+
+        </div>
+
+        <ul class="footer-list">
+
+          <li>
+            <p class="footer-list-title">Our links</p>
+          </li>
+
+          <li>
+            <a href="index.html" class="footer-link">Home</a>
+          </li>
+
+          <li>
+            <a href="about" class="footer-link">About Us</a>
+          </li>
+
+          <li>
+            <a href="#" class="footer-link">Services</a>
+          </li>
+
+
+
+          <li>
+            <a href="#" class="footer-link">Blog</a>
+          </li>
+
+        </ul>
+
+        <ul class="footer-list">
+
+          <li>
+            <p class="footer-list-title">Our Services</p>
+          </li>
+
+          <li>
+            <a href="Self-managed.html" class="footer-link">Self Directed Trading</a>
+          </li>
+
+          <li>
+            <a href="wealth.html" class="footer-link">Wealth</a>
+          </li>
+
+          <li>
+            <a href="interest.html" class="footer-link">Interest</a>
+          </li>
+
+          <li>
+            <a href="etf.html" class="footer-link">ETFs</a>
+          </li>
+
+          <li>
+            <a href="cryptos.html" class="footer-link">Crypto</a>
+          </li>
+
+        </ul>
+
+        <ul class="footer-list">
+
+          <li>
+            <p class="footer-list-title">Other links</p>
+          </li>
+
+
+          <li>
+            <a href="privacy.html" class="footer-link">Privacy Policy</a>
+          </li>
+
+          <li>
+            <a href="terms.html" class="footer-link">Terms & Conditions</a>
+          </li>
+
+          <li>
+            <a href="security-center.html" class="footer-link">Support</a>
+          </li>
+
+        </ul>
+
+        <ul class="footer-list">
+
+          <li>
+            <p class="footer-list-title">Contact Us</p>
+          </li>
+
+          <li class="footer-item">
+
+            </div>
+
+          </li>
+
+          <li class="footer-item">
+
+            <div class="footer-item-icon">
+              <ion-icon name="mail"></ion-icon>
+            </div>
+
+            <div>
+
+              <a href="mailto:boongrow6@gmail.com" class="footer-item-link">help@boongrowth.com</a>
+            </div>
+
+          </li>
+
+          <li class="footer-item">
+
+
+
+
+          </li>
+
+        </ul>
+
+      </div>
+    </div>
+
+  
+
+  </footer>
+
+
+
+
+
+  <!-- 
+    - #GO TO TOP
+  -->
+
+  <a href="#top" class="go-top  active" aria-label="Go To Top" data-go-top>
+    <ion-icon name="arrow-up-outline"></ion-icon>
+  </a>
+
+
+
+
+
+  <!-- 
+    - custom js link
+  -->
+  <script src="./assets/js/script.js"></script>
+ <script src="./button.js"></script>
+  <!-- 
+    - ionicon link
+  -->
+  <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+  <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+
+</body>
+
+</html>
